@@ -23,4 +23,8 @@
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BC.Data\BC.Data.csproj" />
+  </ItemGroup>
+
 </Project>

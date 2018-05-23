@@ -8,7 +8,7 @@ namespace BC.Data.Entity.Authors
 {
     public class AuthorEM
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
