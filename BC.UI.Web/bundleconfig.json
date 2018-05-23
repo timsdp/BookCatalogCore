@@ -1,0 +1,50 @@
+﻿// Configure bundling and minification for the project.
+// More info at https://go.microsoft.com/fwlink/?LinkId=808241
+[
+  {
+    "outputFileName": "wwwroot/css/site.min.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/css/paper-dashboard.css",
+      "wwwroot/css/demo.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/fonts.min.css",
+    "inputFiles": [
+      "wwwroot/css/paper-dashboard.css",
+      "wwwroot/fonts/font-awesome.min.css",
+      "wwwroot/fonts/google-fonts.css",
+      "wwwroot/css/themify-icons.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/paper-dashboard.js",
+      "wwwroot/js/demo.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optionally generate .map file
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/bootstrap-plugins.min.js",
+    "inputFiles": [
+      "wwwroot/js/bootstrap-checkbox-radio.js",
+      "wwwroot/js/bootstrap-notify.js",
+      "wwwroot/js/chartist.min.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optionally generate .map file
+    "sourceMap": false
+  }
+]

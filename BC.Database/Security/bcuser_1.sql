@@ -1,0 +1,3 @@
+﻿CREATE LOGIN [bcuser]
+    WITH PASSWORD = N'b.HA!ncxlKvfv%fhSxrof8m4msFT7_&#$!~<cvyd4yjfvvvv', SID = 0x06554BAE345EE742871EAD8E6A84998D, DEFAULT_DATABASE = [BookCatalog], DEFAULT_LANGUAGE = [us_english], CHECK_POLICY = OFF;
+
