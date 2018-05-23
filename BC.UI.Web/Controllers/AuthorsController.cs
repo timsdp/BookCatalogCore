@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BC.UI.Web.Controllers
 {
-    public class AuthorsController : Controller
+    public class AuthorsController : BaseController
     {
         AuthorsRepository authorsRepo = new AuthorsRepository();
         public IActionResult Index()
