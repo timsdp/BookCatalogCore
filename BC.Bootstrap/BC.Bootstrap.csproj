@@ -8,4 +8,9 @@
     <PackageReference Include="AutoMapper" Version="6.2.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BC.Data.Entity\BC.Data.Entity.csproj" />
+    <ProjectReference Include="..\BC.ViewModel\BC.ViewModel.csproj" />
+  </ItemGroup>
+
 </Project>
