@@ -12,6 +12,7 @@ using BC.UI.Web.Data;
 using BC.UI.Web.Models;
 using BC.UI.Web.Services;
 using AutoMapper;
+using BC.Bootstrap;
 
 namespace BC.UI.Web
 {
@@ -38,8 +39,8 @@ namespace BC.UI.Web
             services.AddTransient<IEmailSender, EmailSender>();
 
             //Automapper
-            //HOWTO: https://dotnetcoretutorials.com/2017/09/23/using-automapper-asp-net-core/
-            services.AddAutoMapper();
+            MapperConfig.GonfigureMappings();
+
 
             services.AddMvc();
         }

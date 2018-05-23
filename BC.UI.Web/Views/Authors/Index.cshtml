@@ -6,6 +6,6 @@
 <ul>
     @foreach (var item in Model)
     {
-    <li>@($"{item.FirstName} {item.LastName}")</li>
+    <li><a asp-area="" asp-controller="Author" asp-action="Details">@($"{item.FirstName} {item.LastName}")</a></li>
     }
 </ul>
