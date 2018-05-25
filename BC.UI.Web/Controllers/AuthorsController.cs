@@ -14,7 +14,9 @@ namespace BC.UI.Web.Controllers
         AuthorsRepository authorsRepo = new AuthorsRepository();
         public IActionResult Index()
         {
-            return View(authorsRepo.GetAuthors());
+            var authors = authorsRepo.GetAuthors();
+            var vm = Mapper.Map<IEnumerable<AuthorVM>>(authors);
+            return View(vm);
         }
 
         public IActionResult Details(int id)

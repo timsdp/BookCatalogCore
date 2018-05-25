@@ -38,7 +38,7 @@ namespace BC.UI.Web
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
-            //Automapper
+            //Automapper initialization
             MapperConfig.GonfigureMappings();
 
 
