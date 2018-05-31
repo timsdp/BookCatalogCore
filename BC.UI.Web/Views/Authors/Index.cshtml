@@ -1,11 +1,51 @@
 ﻿@model IEnumerable<BC.Data.Entity.Authors.AuthorEM>
+
 @{
-    ViewData["Title"] = "Authors list";
+    ViewBag.Title = "Authors list";
 }
+
 
 <ul>
     @foreach (var item in Model)
     {
-    <li><a asp-area="" asp-controller="Author" asp-action="Details">@($"{item.FirstName} {item.LastName}")</a></li>
+        <li><a asp-area="" asp-controller="Author" asp-action="Details">@($"{item.FirstName} {item.LastName}")</a></li>
     }
 </ul>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Authors</h4>
+                    <p class="category">Available books in the catalog</p>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Born</th>
+                                <th>Contry</th>
+                                <th>Books count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jack London</td>
+                                <td>1885</td>
+                                <td>USA</td>
+                                <td>
+                                    42
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
