@@ -17,12 +17,12 @@ namespace BC.UI.Web.Controllers
             return View(authorsRepo.GetAuthors());
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Edit(int id)
         {
             var authorEM = authorsRepo.Get(id);
             AuthorVM vm = Mapper.Map<AuthorVM>(authorEM);
             return View(vm);
-
         }
+
     }
 }

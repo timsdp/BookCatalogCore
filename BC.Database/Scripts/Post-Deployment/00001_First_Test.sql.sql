@@ -9,5 +9,3 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-:r .\Post-Deployment\00001_First_Test.sql
-:r .\Post-Deployment\00001_Second_Test.sql
