@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<AuthorVM>
 
 @{
-    ViewBag.Title = "Authors list";
+    ViewBag.Title = "Authors";
 }
 
 
@@ -18,7 +18,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Books</h4>
+                    <h4 class="title">Authors</h4>
                     <p class="category">Available authors</p>
                 </div>
                 <div class="content table-responsive table-full-width">
@@ -49,8 +49,8 @@
                                     247
                                 </td>
                                 <td>
-                                    <a href="#"><i class="fa fa-edit" style="color:gray"></i></a>
-                                    <a href="#"><i class="fa fa-remove" style="color:gray"></i></a>
+                                    <a asp-action="Edit" asp-controller="Authors" asp-route-id="5"><i class="fa fa-edit" style="color:gray"></i></a>
+                                    <a asp-action="Delete" asp-controller="Authors" asp-route-id="5"><i class="fa fa-remove" style="color:gray"></i></a>
                                 </td>
                             </tr>
                         </tbody>

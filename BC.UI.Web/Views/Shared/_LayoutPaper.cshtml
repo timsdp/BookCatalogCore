@@ -21,6 +21,8 @@
         <!-- Styles: site-->
         <link rel="stylesheet" href="~/css/paper-dashboard.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -28,19 +30,21 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/fonts.min.css" asp-append-version="true" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>
     </environment>
 </head>
 <body>
 
     <div class="wrapper">
         <div class="sidebar" data-background-color="black" data-active-color="danger">
+
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a asp-area="" asp-controller="Home" asp-action="Index">
-                        Book Catalog
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="simple-text logo-normal">
+                        Book catalog
                     </a>
                 </div>
-
                 <ul class="nav">
                     <li class="active">
                         <a asp-area="" asp-controller="Home" asp-action="Index">
@@ -163,6 +167,7 @@
         <!--Scripts: common libs-->
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>
         <!--Scripts: site js-->
         <script src="~/js/paper-dashboard.js"></script>
         <script src="~/js/demo.js" asp-append-version="true"></script>
@@ -185,6 +190,7 @@
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
+        <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>
         <!--Scripts: site js-->
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         <!--Scripts: bootstrap plugins-->
@@ -192,21 +198,6 @@
     </environment>
     @RenderSection("Scripts", required: false)
 
-    <script type="text/javascript">
-        $(document).ready(function () {
 
-            demo.initChartist();
-
-            $.notify({
-                icon: 'ti-gift',
-                message: "Welcome to <b>Paper Dashboard</b> - a beautiful Bootstrap freebie for your next project."
-
-            }, {
-                    type: 'success',
-                    timer: 4000
-                });
-
-        });
-    </script>
 </body>
 </html>

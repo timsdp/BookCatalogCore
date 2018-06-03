@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BC.Bootstrap.Mapper.Resolvers;
 using BC.Data.Entity.Authors;
 using BC.ViewModel;
 using System;
@@ -12,7 +11,7 @@ namespace BC.Bootstrap.MapperProfiles
     {
         public static void Init(IMapperConfigurationExpression mapperConfig)
         {
-            mapperConfig.CreateMap<AuthorEM, AuthorVM>().ForMember(vm=>vm.FullName, opt => opt.ResolveUsing<AuthorFirstNameLastNameResolver>(a=>a.FirstName));
+            //mapperConfig.CreateMap<AuthorEM, AuthorVM>().ForMember(vm=>vm.FullName, opt => opt.ResolveUsing<Bootstrap.MapperConfig.Resolvers.AuthorFirstNameLastNameResolver>(a=>a.FirstName));
             mapperConfig.CreateMap<AuthorVM, AuthorEM>();
             
         }

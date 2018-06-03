@@ -16,18 +16,18 @@ namespace BC.UI.Web.Controllers
         public IActionResult Index()
         {
             //return View(authorsRepo.GetAuthors());
-            return View(new List<AuthorEM>());
+            return View(new List<AuthorVM>());
 
-            var authors = authorsRepo.GetAuthors();
-            var vm = Mapper.Map<IEnumerable<AuthorVM>>(authors);
-            return View(vm);
+            //var authors = authorsRepo.GetAuthors();
+            //var vm = Mapper.Map<IEnumerable<AuthorVM>>(authors);
+            //return View(vm);
         }
 
         public IActionResult Edit(int id)
         {
-            var authorEM = authorsRepo.Get(id);
-            AuthorVM vm = Mapper.Map<AuthorVM>(authorEM);
-            return View(vm);
+            //var authorEM = authorsRepo.Get(id);
+            //AuthorVM vm = Mapper.Map<AuthorVM>(authorEM);
+            return View(new AuthorVM());
         }
 
     }

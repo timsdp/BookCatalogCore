@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BC.Bootstrap.Mapper.Resolvers
+namespace BC.Bootstrap.MapperSettings.Resolvers
 {
     public interface IValueResolver<in TSource, in TDestination, TDestMember>
     {

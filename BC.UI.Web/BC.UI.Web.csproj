@@ -22,6 +22,7 @@
     <Folder Include="wwwroot\js\view-model\" />
     <Folder Include="wwwroot\lib\bootstrap-plugins\js\" />
     <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\lib\knockout\" />
   </ItemGroup>
 
   <ItemGroup>
