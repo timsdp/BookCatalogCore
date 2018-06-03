@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BC.Data.Entity.Authors;
 using BC.Data.Repositories;
 using BC.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,9 @@ namespace BC.UI.Web.Controllers
         AuthorsRepository authorsRepo = new AuthorsRepository();
         public IActionResult Index()
         {
-            return View(authorsRepo.GetAuthors());
+            //return View(authorsRepo.GetAuthors());
+            return View(new List<AuthorEM>());
+
         }
 
         public IActionResult Edit(int id)
