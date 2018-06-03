@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BC.Bootstrap.MapperProfiles;
 using BC.Data.Entity.Authors;
 using BC.ViewModel;
 using System;
@@ -13,8 +14,7 @@ namespace BC.Bootstrap
         {
             Mapper.Initialize(config =>
             {
-                config.CreateMap<AuthorEM, AuthorVM>();
-                config.CreateMap<AuthorVM, AuthorEM>();
+                MappingAuthors.Init(config);
             }
             );
         }

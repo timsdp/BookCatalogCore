@@ -18,6 +18,9 @@ namespace BC.UI.Web.Controllers
             //return View(authorsRepo.GetAuthors());
             return View(new List<AuthorEM>());
 
+            var authors = authorsRepo.GetAuthors();
+            var vm = Mapper.Map<IEnumerable<AuthorVM>>(authors);
+            return View(vm);
         }
 
         public IActionResult Edit(int id)

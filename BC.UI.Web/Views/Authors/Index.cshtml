@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BC.Data.Entity.Authors.AuthorEM>
+﻿@model IEnumerable<AuthorVM>
 
 @{
     ViewBag.Title = "Authors list";
@@ -8,7 +8,7 @@
 <ul>
     @foreach (var item in Model)
     {
-        <li><a asp-area="" asp-controller="Author" asp-action="Details">@($"{item.FirstName} {item.LastName}")</a></li>
+    <li><a asp-area="" asp-controller="Author" asp-action="Details">@item.FullName</a></li>
     }
 </ul>
 
