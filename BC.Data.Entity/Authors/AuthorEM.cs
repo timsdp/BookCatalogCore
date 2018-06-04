@@ -11,6 +11,13 @@ namespace BC.Data.Entity.Authors
         public int? Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public int YearBorn { get; set; }
+        public int YearDied { get; set; }
+        public int Rating { get; set; }
+        public string Country { get; set; }
+        public string ExtraInfo { get; set; }
+        public string Quote { get; set; }
+
+
     }
 }

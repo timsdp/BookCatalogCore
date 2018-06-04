@@ -18,11 +18,34 @@
         <link rel="stylesheet" href="~/fonts/font-awesome.min.css" />
         <link rel="stylesheet" href="~/fonts/google-fonts.css" />
         <link rel="stylesheet" href="~/css/themify-icons.css" />
+        <!--Datatables Lib-->
+        <link rel="stylesheet" href="~/lib/datatables/DataTables-1.10.16/css/dataTables.bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/datatables/Select-1.2.5/css/select.bootstrap.css" />
+
         <!-- Styles: site-->
         <link rel="stylesheet" href="~/css/paper-dashboard.css" />
         <link rel="stylesheet" href="~/css/demo.css" />
+
+
+        <!--Scripts: common libs-->
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>
+
+        <!--Scripts: site js-->
+        <script src="~/js/paper-dashboard.js" asp-append-version="true"></script>
+        <script src="~/js/demo.js" asp-append-version="true"></script>
+
+
+        <!--Scripts: bootstrap plugins-->
+        <script src="~/js/bootstrap-checkbox-radio.js"></script>
+        <script src="~/js/bootstrap-notify.js"></script>
+        <script src="~/js/chartist.min.js"></script>
+
+        <!--Datatables Lib-->
+        <script src="~/lib/datatables/DataTables-1.10.16/js/jquery.dataTables.js"></script>
+        <script src="~/lib/datatables/DataTables-1.10.16/js/dataTables.bootstrap.js"></script>
+        <script src="~/lib/datatables/Select-1.2.5/js/dataTables.select.js"></script>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -30,8 +53,11 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/css/fonts.min.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/datatables.css" asp-append-version="true" />
+
         <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>.
+        <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>
+        <script src="~/js/datatables.js"></script>
     </environment>
 </head>
 <body>
@@ -163,39 +189,7 @@
         </div>
     </div>
 
-    <environment include="Development">
-        <!--Scripts: common libs-->
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>
-        <!--Scripts: site js-->
-        <script src="~/js/paper-dashboard.js"></script>
-        <script src="~/js/demo.js" asp-append-version="true"></script>
-        <!--Scripts: bootstrap plugins-->
-        <script src="~/js/bootstrap-checkbox-radio.js"></script>
-        <script src="~/js/bootstrap-notify.js"></script>
-        <script src="~/js/chartist.min.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <!--Scripts: common libs-->
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/lib/knockout/knockout-3.5.0rc.js"></script>
-        <!--Scripts: site js-->
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-        <!--Scripts: bootstrap plugins-->
-        <script src="~/js/bootstrap-plugins.min.js"></script>
-    </environment>
+   
     @RenderSection("Scripts", required: false)
 
 

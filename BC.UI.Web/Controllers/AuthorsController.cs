@@ -16,11 +16,11 @@ namespace BC.UI.Web.Controllers
         public IActionResult Index()
         {
             //return View(authorsRepo.GetAuthors());
-            return View(new List<AuthorVM>());
+            //return View(new List<AuthorVM>());
 
-            //var authors = authorsRepo.GetAuthors();
-            //var vm = Mapper.Map<IEnumerable<AuthorVM>>(authors);
-            //return View(vm);
+            var authors = authorsRepo.GetAuthors();
+            var vm = Mapper.Map<IEnumerable<AuthorVM>>(authors);
+            return View(vm);
         }
 
         public IActionResult Edit(int id)

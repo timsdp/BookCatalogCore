@@ -153,4 +153,10 @@
     <None Include="Scripts\Post-Deployment\00001_First_Test.sql" />
     <None Include="Scripts\Post-Deployment\00001_Initial_Data_Seed.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="InsertInitialData">
+      <DefaultValue>0</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
 </Project>
