@@ -11,3 +11,4 @@ Post-Deployment Script Template
 */
 :r .\Post-Deployment\00001_First_Test.sql
 :r .\Post-Deployment\00001_Second_Test.sql
+:r .\Post-Deployment\00001_Initial_Data_Seed.sql
