@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Books";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h4 class="title">Books</h4>
+                    <p class="category">Available books in the catalog</p>
+                </div>
+                <div class="content table-responsive table-full-width">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Published</th>
+                                <th>Authors</th>
+                                <th>Rating</th>
+                                <th>Pages</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Book name 1</td>
+                                <td>1885</td>
+                                <td>Author 1, Author 2 ...</td>
+                                <td>
+                                    <i class="fa fa-star" style="color:gray"></i>
+                                    <i class="fa fa-star" style="color:gray"></i>
+                                    <i class="fa fa-star" style="color:gray"></i>
+                                    <i class="fa fa-star-o" style="color:gray"></i>
+                                    <i class="fa fa-star-o" style="color:gray"></i>
+                                </td>
+                                <td>
+                                    247
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-controller="Books" asp-route-id="5"><i class="fa fa-edit" style="color:gray"></i></a>
+                                    <a asp-action="Delete" asp-controller="Books" asp-route-id="5"><i class="fa fa-remove" style="color:gray"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

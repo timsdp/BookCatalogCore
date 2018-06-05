@@ -5,7 +5,7 @@ using AutoMapper;
 using BC.Data.Entity.Authors;
 using BC.ViewModel;
 
-namespace BC.Bootstrap.Mapper.Resolvers
+namespace BC.Bootstrap.MapperSettings.Resolvers
 {
     public class AuthorFirstNameLastNameResolver : IValueResolver<AuthorEM, AuthorVM, string>
     {

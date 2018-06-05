@@ -9,7 +9,7 @@ function AuthorVM(){
     self.Born = ko.observable("1865");
     self.Died = ko.observable("1930");
     self.TopBooks = ["Book name 1", "Book name 2", "Book name 3", "Book name 4"];
-    self.IsConfirmed - ko.observable(true);
+    self.IsFavourite- ko.observable(true);
     self.Wiki = ko.observable("https://en.wikipedia.org/wiki/Jack_London");
 }
 

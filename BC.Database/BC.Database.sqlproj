@@ -123,6 +123,7 @@
     <Folder Include="Security\" />
     <Folder Include="Snapshots" />
     <Folder Include="Scripts" />
+    <Folder Include="Scripts\Post-Deployment" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Books.sql">
@@ -136,6 +137,7 @@
     <Build Include="Security\Permissions.sql" />
     <Build Include="dbo\Tables\Authors.sql" />
     <Build Include="dbo\Tables\BooksAuthors.sql" />
+    <None Include="Scripts\Post-Deployment\00001_Second_Test.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\BC.DataBase_20180508_12-39-02.dacpac" />
@@ -148,5 +150,13 @@
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment1.sql" />
+    <None Include="Scripts\Post-Deployment\00001_First_Test.sql" />
+    <None Include="Scripts\Post-Deployment\00001_Initial_Data_Seed.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="InsertInitialData">
+      <DefaultValue>0</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
   </ItemGroup>
 </Project>

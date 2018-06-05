@@ -15,6 +15,7 @@ namespace BC.Bootstrap
             Mapper.Initialize(config =>
             {
                 MappingAuthors.Init(config);
+                MappingBooks.Init(config);
             }
             );
         }

@@ -1,6 +1,24 @@
 ﻿// Configure bundling and minification for the project.
 // More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
+  //Datatables Lib Styles
+  {
+    "outputFileName": "wwwroot/css/datatables.css",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/lib/datatables/DataTables-1.10.16/css/dataTables.bootstrap.css",
+      "wwwroot/lib/datatables/Select-1.2.5/css/select.bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/datatables.js",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/lib/datatables/DataTables-1.10.16/js/jquery.dataTables.js",
+      "wwwroot/lib/datatables/DataTables-1.10.16/js/dataTables.bootstrap.js",
+      "wwwroot/lib/datatables/Select-1.2.5/js/dataTables.select.js"
+    ]
+  }
   {
     "outputFileName": "wwwroot/css/site.min.css",
     // An array of relative input file paths. Globbing patterns supported
