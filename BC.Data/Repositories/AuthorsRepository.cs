@@ -38,7 +38,7 @@ namespace BC.Data.Repositories
             {
                 var sqlQuery = "INSERT INTO Authors (Name, Age) VALUES(@Name, @Age); SELECT CAST(SCOPE_IDENTITY() as int)";
                 int? AuthorEMId = db.Query<int>(sqlQuery, AuthorEM).FirstOrDefault();
-                AuthorEM.Id = AuthorEMId;
+                AuthorEM.AuthorId = AuthorEMId;
             }
             return AuthorEM;
         }
