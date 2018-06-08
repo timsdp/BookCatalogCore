@@ -80,7 +80,31 @@
        { "data": "rating" },
        { "data": "country" },
        { "data": null }
-    ]
+            ],
+            "columnDefs": [
+                {
+                    "render": function (data, type, row) {
+                        return '<a href="Authors/Edit/'+ data.authorId +'"><i class="fa fa-edit" style="color:gray"></i></a>' +
+                            '<a href="Authors/Delete/' + data.authorId +'"><i class="fa fa-remove" style="color:gray"></i></a>';
+                            '<a href="Authors/Delete/' + data.authorId +'"><i class="fa fa-remove" style="color:gray"></i></a>';
+                    },
+                    "targets": 6
+                },
+                {
+                    "render": function (data, type, row) {
+                        var maxRating = 5;
+                        var html = '';
+                        for (var i = 0; i < row.rating; i++) {
+                            html += '<i class="fa fa-star" style="color:gray"></i>';
+                        }
+                        for (var i = 0; i < maxRating - row.rating; i++) {
+                            html += '<i class="fa fa-star-o" style="color:gray"></i>';
+                        }
+                        return html;
+                    },
+                    "targets": 4
+                }
+            ]
 });
     });
 </script>
