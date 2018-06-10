@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = "Edit author";
 }
-<script src="~/js/view-model/author-vm.js"></script>
+
+ <script src="~/js/view-model/author-vm.js"></script>
 
 <div class="container-fluid">
     <div class="row">
@@ -194,3 +195,8 @@
 
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        ko.applyBindings(new AuthorVM());
+    });
+</script>

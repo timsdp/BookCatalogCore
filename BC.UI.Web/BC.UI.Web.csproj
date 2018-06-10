@@ -5,6 +5,10 @@
     <UserSecretsId>aspnet-BC.UI.Web-515318A7-E614-4810-BEFA-329FAC42403C</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\js\view-model\author.xaml" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
@@ -19,7 +23,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\js\view-model\" />
+    <EmbeddedResource Include="wwwroot\js\view-model\author.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\lib\bootstrap-plugins\js\" />
     <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\lib\knockout\" />
