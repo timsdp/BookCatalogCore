@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit author";
 }
 
- <script src="~/js/view-model/author-vm.js"></script>
+<script src="~/js/view-model/author-vm.js"></script>
 
 <div class="container-fluid">
     <div class="row">
@@ -18,6 +18,7 @@
                         <img class="avatar border-white" src="~/images/author-default.jpg" alt="...">
                         <h4 class="title">
                             <span data-bind="text:FullName">Jack London</span><i class="fa fa-star" style="color:red"></i><br>
+                            <!--Example of attribute binding-->
                             <a href="https://en.wikipedia.org/wiki/Jack_London" data-bind="attr: {href: Wiki}" target="_blank"><small>Wikipedia</small></a>
                         </h4>
 
@@ -44,6 +45,7 @@
                     <h4 class="title">Top books</h4>
                 </div>
                 <div class="content">
+                    <!--Example of array binding. Declare foreach-->
                     <ul class="list-unstyled team-members" data-bind="foreach: TopBooks">
                         <li>
                             <div class="row">
@@ -53,6 +55,7 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-6">
+                                    <!--Example of array binding. Using-->
                                     <span data-bind="text: $data">Book name 1</span>
                                     <br>
                                     <span class="text-muted"><small>About something</small></span>
@@ -127,7 +130,8 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-info btn-fill btn-wd">Update info</button>
+                            <button type="button" id="btnApply" class="btn btn-info btn-fill btn-wd">Apply changes (AJAX)</button>
+                            <button type="submit" id="btnSave" class="btn btn-info btn-fill btn-wd">Save changes (Submit)</button>
                         </div>
                         <div class="clearfix"></div>
                     </form>
@@ -139,7 +143,15 @@
     </div>
 </div>
 <script>
+
     $(document).ready(function () {
-        ko.applyBindings(new AuthorVM());
+        ko.applyBindings(AuthorVM);
+        //Subscribe example: check changed value
+        AuthorVM.Born.subscribe(function (newValue) { if (newValue > 2000) alert("Age seems like invalid! Check is It true?"); });
+
+        AuthorVM.UrlSave='@Url.Action("Update","Authors")'
+
+        $('#btnApply').click(function () { AuthorVM.Save()});
+
     });
 </script>
