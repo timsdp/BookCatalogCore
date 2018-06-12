@@ -17,25 +17,25 @@
                     <div class="author">
                         <img class="avatar border-white" src="~/images/author-default.jpg" alt="...">
                         <h4 class="title">
-                            <span data-bind="text:FullName">Jack London</span><i class="fa fa-star" style="color:red"></i><br>
+                            <span data-bind="text:vm.FullName">Jack London</span><i class="fa fa-star" style="color:red"></i><br>
                             <!--Example of attribute binding-->
-                            <a href="https://en.wikipedia.org/wiki/Jack_London" data-bind="attr: {href: Wiki}" target="_blank"><small>Wikipedia</small></a>
+                            <a href="https://en.wikipedia.org/wiki/Jack_London" data-bind="attr: {href: vm.Wiki}" target="_blank"><small>Wikipedia</small></a>
                         </h4>
 
                     </div>
-                    <p class="description text-center" data-bind="text:Quote">Famous authors quote value</p>
+                    <p class="description text-center" data-bind="text:vm.Quote">Famous authors quote value</p>
                 </div>
                 <hr>
                 <div class="text-center">
                     <div class="row">
                         <div class="col-md-3 col-md-offset-1">
-                            <h5><span data-bind="text:BooksCount">28</span><br><small>Books</small></h5>
+                            <h5><span data-bind="text:vm.BooksCount">99</span><br><small>Books</small></h5>
                         </div>
                         <div class="col-md-4">
-                            <h5><span data-bind="text:Born">1865</span><br><small>Born</small></h5>
+                            <h5><span data-bind="text:vm.Born">999</span><br><small>Born</small></h5>
                         </div>
                         <div class="col-md-3">
-                            <h5><span data-bind="text:Died">1930</span><br><small>Died</small></h5>
+                            <h5><span data-bind="text:vm.Died">9999</span><br><small>Died</small></h5>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="content">
                     <!--Example of array binding. Declare foreach-->
-                    <ul class="list-unstyled team-members" data-bind="foreach: TopBooks">
+                    <ul class="list-unstyled team-members" data-bind="foreach: vm.TopBooks">
                         <li>
                             <div class="row">
                                 <div class="col-xs-3">
@@ -81,13 +81,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control border-input" placeholder="First Name" data-bind="value:FirstName">
+                                    <input type="text" class="form-control border-input" placeholder="First Name" data-bind="value:vm.FirstName">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input type="text" class="form-control border-input" placeholder="Last Name" data-bind="value:LastName">
+                                    <input type="text" class="form-control border-input" placeholder="Last Name" data-bind="value:vm.LastName">
                                 </div>
                             </div>
 
@@ -97,19 +97,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label>Country</label>
-                                    <input class="form-control border-input" placeholder="Country born" data-bind="value:Country">
+                                    <input class="form-control border-input" placeholder="Country born" data-bind="value:vm.Country">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Date of birth</label>
-                                    <input class="form-control border-input" placeholder="Date of birth" data-bind="value:Born">
+                                    <input class="form-control border-input" placeholder="Date of birth" data-bind="value:vm.Born">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Date of death</label>
-                                    <input class="form-control border-input" placeholder="Date of death" data-bind="value:Died">
+                                    <input class="form-control border-input" placeholder="Date of death" data-bind="value:vm.Died">
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Wikipedia link</label>
-                                    <input class="form-control border-input" placeholder="Url" data-bind="value:Wiki">
+                                    <input class="form-control border-input" placeholder="Url" data-bind="value:vm.Wiki">
                                 </div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Famous quote</label>
-                                    <textarea rows="5" class="form-control border-input" placeholder="Here can be your description" data-bind="value:Quote"></textarea>
+                                    <textarea rows="5" class="form-control border-input" placeholder="Here can be your description" data-bind="value:vm.Quote"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -145,13 +145,13 @@
 <script>
 
     $(document).ready(function () {
-        ko.applyBindings(AuthorVM);
+        ko.applyBindings(Author);
         //Subscribe example: check changed value
-        AuthorVM.Born.subscribe(function (newValue) { if (newValue > 2000) alert("Age seems like invalid! Check is It true?"); });
+        Author.vm.Born.subscribe(function (newValue) { if (newValue > 2000) alert("Age seems like invalid! Check is It true?"); });
 
-        AuthorVM.UrlSave='@Url.Action("Update","Authors")'
+        Author.UrlSaveVm='@Url.Action("Update","Authors")'
 
-        $('#btnApply').click(function () { AuthorVM.Save()});
+        $('#btnApply').click(function () { Author.Save()});
 
     });
 </script>

@@ -32,6 +32,12 @@ namespace BC.UI.Web.Controllers
         }
 
         [HttpPost]
+        public IActionResult Update(AuthorVM vm)
+        {
+            return Json(new { Err= 0, Msg = "Success"});
+        }
+
+        [HttpPost]
         public JsonResult GetAll(DataTableAjaxPostModel model)
         {// action inside a standard controller
             int filteredResultsCount;

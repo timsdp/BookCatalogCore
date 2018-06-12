@@ -6,41 +6,34 @@ var Author = Author || {};
     self.UrlSaveVm = '';
     self.UrlGetVm = '';
 
-    function VM(model) {
-        var inner = this;
-
+    self.vm = {
+        //Observable fields
+        Id: 999,
+        FirstName : ko.observable("Jack"),
+        LastName : ko.observable("London"),
+        FullName : ko.pureComputed(function () { return self.vm.FirstName() + " " + self.vm.LastName(); }),
+        Country : ko.observable("USA"),
+        Quote : ko.observable("Famous authors quote value"),
+        BooksCount : ko.observable(28),
+        Born : ko.observable(1865),
+        Died : ko.observable(1930),
+        TopBooks : ["Book name 1", "Book name 2", "Book name 3", "Book name 4"],
+        IsFavourite : ko.observable(true),
+        Wiki : ko.observable("https://en.wikipedia.org/wiki/Jack_London")
     }
 
-    //Observable fields
-    self.FirstName = ko.observable("Jack");
-    self.LastName = ko.observable("London");
-    self.FullName = ko.pureComputed(function () { return self.FirstName() + " " + self.LastName(); });
-    self.Country = ko.observable("USA");
-    self.Quote = ko.observable("Famous authors quote value");
-    self.BooksCount = ko.observable(28);
-    self.Born = ko.observable(1865);
-    self.Died = ko.observable(1930);
-    self.TopBooks = ["Book name 1", "Book name 2", "Book name 3", "Book name 4"];
-
-    self.IsFavourite - ko.observable(true);
-    self.Wiki = ko.observable("https://en.wikipedia.org/wiki/Jack_London");
-
-    //Initialization
-    //self.InitVM = function () {
-    //    console.log("Getting Author from server...");
-    //    console.log("json: ");
-    //}
-
+    
     self.Save = function () {
         console.log("Post Author to server...");
-        var dto = ko.toJS(self);
+        var dto = ko.toJS(self.vm);
         console.log("json: " + dto);
+        console.log(self.UrlSaveVm);
         $.ajax({
             url: self.UrlSaveVm,
-            data: ko.toJS(self),
+            data: dto,
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded'
-        }).success(console.log('Save: success!')).error(console.log('Save: error!'));
+        }).success(function () { console.log('Save: success!'); toastr.success('Update Success!'); }).error(function(){ console.log('Save: error!'); toastr.error('Update error'); });
     }
 //https://learn.javascript.ru/call-apply
 // transfer passed context (AuthorVM) to "this" in function as a parameter
