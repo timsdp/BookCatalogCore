@@ -62,30 +62,29 @@
 <script>
     $(document).ready(function () {
         var table = $('#tableAuthors').DataTable({
-    "proccessing": true,
-    "serverSide": true,
-    "ajax": {
+    proccessing: true,
+    serverSide: true,
+    ajax: {
         url: "@Url.Action("GetAll", "Authors")",
         type: 'POST'
     },
-    "language": {
+    language: {
         "search": "",
         "searchPlaceholder": "Search..."
     },
-   "columns": [
-        { "data": "authorId" },
-       { "data": "fullName" },
-       { "data": "yearBorn" },
-       { "data": "yearDied" },
-       { "data": "rating" },
-       { "data": "country" },
-       { "data": null }
+            columns: [
+                { data: "id", visible: false },
+       { data: "fullName" },
+       { data: "born" },
+       { data: "died" },
+       { data: "rating" },
+                { data: "country" },
+                { data: null, orderable: false }
             ],
-            "columnDefs": [
+            columnDefs: [
                 {
                     "render": function (data, type, row) {
                         return '<a href="Authors/Edit/'+ data.authorId +'"><i class="fa fa-edit" style="color:gray"></i></a>' +
-                            '<a href="Authors/Delete/' + data.authorId +'"><i class="fa fa-remove" style="color:gray"></i></a>';
                             '<a href="Authors/Delete/' + data.authorId +'"><i class="fa fa-remove" style="color:gray"></i></a>';
                     },
                     "targets": 6
@@ -103,6 +102,12 @@
                         return html;
                     },
                     "targets": 4
+                },
+                {
+                    "render": function (data, type, row) {
+                        return row.died == 0 ? "-" : row.died;
+                    },
+                    "targets": 3
                 }
             ]
 });

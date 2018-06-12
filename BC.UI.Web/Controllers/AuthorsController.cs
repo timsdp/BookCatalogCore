@@ -39,14 +39,14 @@ namespace BC.UI.Web.Controllers
 
         [HttpPost]
         public JsonResult GetAll(DataTableAjaxPostModel model)
-        {// action inside a standard controller
+        {
             int filteredResultsCount;
             int totalResultsCount;
-            var result = YourCustomSearchFunc(model, out filteredResultsCount, out totalResultsCount);
+            var result = getAuthorsByCustomSearch(model, out filteredResultsCount, out totalResultsCount);
 
             return Json(new
             {
-                // this is what datatables wants sending back
+                // this is what datatables wants sending back, it uses to diferentiate ajax calls and responses
                 draw = model.draw,
                 recordsTotal = totalResultsCount,
                 recordsFiltered = filteredResultsCount,
@@ -54,7 +54,9 @@ namespace BC.UI.Web.Controllers
             });
         }
 
-        public IList<AuthorVM> YourCustomSearchFunc(DataTableAjaxPostModel model, out int filteredResultsCount, out int totalResultsCount)
+
+        #region DataTables methods
+        private IList<AuthorVM> getAuthorsByCustomSearch(DataTableAjaxPostModel model, out int filteredResultsCount, out int totalResultsCount)
         {
             var searchBy = (model.search != null) ? model.search.value : null;
             var take = model.length;
@@ -71,7 +73,7 @@ namespace BC.UI.Web.Controllers
             }
 
             // search the dbase taking into consideration table sorting and paging
-            var result = GetDataFromDbase(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
+            var result = getDataFromDb(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
             if (result == null)
             {
                 // empty collection...
@@ -80,7 +82,7 @@ namespace BC.UI.Web.Controllers
             return result;
         }
 
-        public List<AuthorVM> GetDataFromDbase(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
+        private List<AuthorVM> getDataFromDb(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
             if (String.IsNullOrEmpty(searchBy))
             {
@@ -96,7 +98,7 @@ namespace BC.UI.Web.Controllers
             {
                 filteredEntries = allEntries.Where(e => e.FirstName.Contains(searchBy) || e.LastName.Contains(searchBy)).ToList();
             }
-            var pagedEntries = sortDir ? filteredEntries.OrderBy(e => e.FirstName).ToList() : filteredEntries.OrderByDescending(e=>e.FirstName).ToList();
+            var pagedEntries = sortDir ? filteredEntries.OrderBy(e => e.FirstName).ToList() : filteredEntries.OrderByDescending(e => e.FirstName).ToList();
             pagedEntries = pagedEntries.Skip(skip).Take(take).ToList();
 
             // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
@@ -106,5 +108,6 @@ namespace BC.UI.Web.Controllers
             return resultVm;
         }
 
+        #endregion
     }
 }

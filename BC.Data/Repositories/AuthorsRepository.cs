@@ -37,8 +37,8 @@ namespace BC.Data.Repositories
             using (IDbConnection db = new SqlConnection(connectionString))
             {
                 var sqlQuery = "INSERT INTO Authors (Name, Age) VALUES(@Name, @Age); SELECT CAST(SCOPE_IDENTITY() as int)";
-                int? AuthorEMId = db.Query<int>(sqlQuery, AuthorEM).FirstOrDefault();
-                AuthorEM.AuthorId = AuthorEMId;
+                int? id = db.Query<int>(sqlQuery, AuthorEM).FirstOrDefault();
+                AuthorEM.AuthorId = id;
             }
             return AuthorEM;
         }

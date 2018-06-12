@@ -3,29 +3,45 @@ var Author = Author || {};
 
 (function() {
     var self = this;
+
+    //API urls
     self.UrlSaveVm = '';
     self.UrlGetVm = '';
 
-    self.vm = {
+    //Viewmodel instance
+    self.VM = {
         //Observable fields
         Id: 999,
         FirstName : ko.observable("Jack"),
         LastName : ko.observable("London"),
-        FullName : ko.pureComputed(function () { return self.vm.FirstName() + " " + self.vm.LastName(); }),
+        FullName : ko.pureComputed(function () { return self.VM.FirstName() + " " + self.VM.LastName(); }),
         Country : ko.observable("USA"),
         Quote : ko.observable("Famous authors quote value"),
         BooksCount : ko.observable(28),
         Born : ko.observable(1865),
-        Died : ko.observable(1930),
+        Died: ko.observable(1930),
+        Rating: ko.observable(3),
         TopBooks : ["Book name 1", "Book name 2", "Book name 3", "Book name 4"],
         IsFavourite : ko.observable(true),
         Wiki : ko.observable("https://en.wikipedia.org/wiki/Jack_London")
     }
 
-    
-    self.Save = function () {
+    self.GetVM = function () {
         console.log("Post Author to server...");
-        var dto = ko.toJS(self.vm);
+        var dto = ko.toJS(self.VM);
+        console.log("json: " + dto);
+        console.log(self.UrlSaveVm);
+        $.ajax({
+            url: self.UrlSaveVm,
+            data: dto,
+            type: 'GET',
+            contentType: 'application/x-www-form-urlencoded'
+        }).success(function () { console.log('Save: success!'); toastr.success('Update Success!'); }).error(function () { console.log('Save: error!'); toastr.error('Update error'); });
+    }
+
+    self.SaveVM = function () {
+        console.log("Post Author to server...");
+        var dto = ko.toJS(self.VM);
         console.log("json: " + dto);
         console.log(self.UrlSaveVm);
         $.ajax({

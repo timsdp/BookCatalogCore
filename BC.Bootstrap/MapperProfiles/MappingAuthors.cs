@@ -12,9 +12,15 @@ namespace BC.Bootstrap.MapperProfiles
     {
         public static void Init(IMapperConfigurationExpression mapperConfig)
         {
-            mapperConfig.CreateMap<AuthorEM, AuthorVM>().ForMember(vm=>vm.FullName, opt => opt.MapFrom(s=>$"{s.FirstName} {s.LastName}"));
+            mapperConfig.CreateMap<AuthorEM, AuthorVM>()
+            .ForMember(vm => vm.Id, em => em.MapFrom(s => s.AuthorId))
+            .ForMember(vm => vm.FullName, em => em.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+            .ForMember(vm => vm.Died, em => em.MapFrom(s => s.YearDied))
+            .ForMember(vm => vm.Born, em => em.MapFrom(s => s.YearBorn));
+
+
             mapperConfig.CreateMap<AuthorVM, AuthorEM>();
-            
+
         }
     }
 }

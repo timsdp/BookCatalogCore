@@ -124,6 +124,7 @@
     <Folder Include="Snapshots" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\Post-Deployment" />
+    <Folder Include="dbo\Stored procedures" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Books.sql">
@@ -138,6 +139,17 @@
     <Build Include="dbo\Tables\Authors.sql" />
     <Build Include="dbo\Tables\BooksAuthors.sql" />
     <None Include="Scripts\Post-Deployment\00001_Second_Test.sql" />
+    <Build Include="dbo\Stored procedures\SPAuthorCreate.sql" />
+    <Build Include="dbo\Stored procedures\SPAuthorDelete.sql" />
+    <Build Include="dbo\Stored procedures\SPAuthorUpdate.sql" />
+    <Build Include="dbo\Stored procedures\SPAuthorGetAll.sql" />
+    <Build Include="dbo\Stored procedures\SPAuthorGet.sql" />
+    <Build Include="dbo\Stored procedures\SPBookUpdate.sql" />
+    <Build Include="dbo\Stored procedures\SPBookDelete.sql" />
+    <Build Include="dbo\Stored procedures\SPBookGet.sql" />
+    <Build Include="dbo\Stored procedures\SPBookGetAll.sql" />
+    <Build Include="dbo\Stored procedures\SPBookCreate.sql" />
+    <Build Include="dbo\Stored procedures\SPGetStats.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Snapshots\BC.DataBase_20180508_12-39-02.dacpac" />
