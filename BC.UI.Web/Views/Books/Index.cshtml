@@ -4,52 +4,124 @@
 }
 
 
+
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
                     <h4 class="title">Books</h4>
-                    <p class="category">Available books in the catalog</p>
+                    <p class="category">Available books</p>
                 </div>
-                <div class="content table-responsive table-full-width">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Published</th>
-                                <th>Authors</th>
-                                <th>Rating</th>
-                                <th>Pages</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Book name 1</td>
-                                <td>1885</td>
-                                <td>Author 1, Author 2 ...</td>
-                                <td>
-                                    <i class="fa fa-star" style="color:gray"></i>
-                                    <i class="fa fa-star" style="color:gray"></i>
-                                    <i class="fa fa-star" style="color:gray"></i>
-                                    <i class="fa fa-star-o" style="color:gray"></i>
-                                    <i class="fa fa-star-o" style="color:gray"></i>
-                                </td>
-                                <td>
-                                    247
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-controller="Books" asp-route-id="5"><i class="fa fa-edit" style="color:gray"></i></a>
-                                    <a asp-action="Delete" asp-controller="Books" asp-route-id="5"><i class="fa fa-remove" style="color:gray"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                <div class="content">
+                    <div class="table-responsive">
+                        <table id="tableBooks" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Authors</th>
+                                    <th>Published</th>
+                                    <th>Pages </th>
+                                    <th>Rating</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>555</td>
+                                    <td>Full name</td>
+                                    <td>1900-12-01</td>
+                                    <td>358</td>
+                                    <td>
+                                        <i class="fa fa-star" style="color:gray"></i>
+                                        <i class="fa fa-star" style="color:gray"></i>
+                                        <i class="fa fa-star" style="color:gray"></i>
+                                        <i class="fa fa-star-o" style="color:gray"></i>
+                                        <i class="fa fa-star-o" style="color:gray"></i>
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-controller="Authors" asp-route-id="5"><i class="fa fa-edit" style="color:gray"></i></a>
+                                        <a asp-action="Delete" asp-controller="Authors" asp-route-id="5"><i class="fa fa-remove" style="color:gray"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#tableBooks').DataTable({
+    proccessing: true,
+    serverSide: true,
+    ajax: {
+        url: "@Url.Action("GetAll", "Books")",
+        type: 'POST'
+    },
+    language: {
+        "search": "",
+        "searchPlaceholder": "Search..."
+    },
+            columns: [
+                { data: "id", visible: false },
+                { data: "name" },
+                { data: "authors" },
+       { data: "published" },
+       { data: "pages" },
+       { data: "rating" },
+                { data: null, orderable: false }
+            ],
+            columnDefs: [
+                {
+                    "render": function (data, type, row) {
+                        return '<a href="Books/Edit/'+ data.authorId +'"><i class="fa fa-edit" style="color:gray"></i></a>' +
+                            '<a href="Books/Delete/' + data.authorId +'"><i class="fa fa-remove" style="color:gray"></i></a>';
+                    },
+                    "targets": 6
+                },
+                {
+                    "render": function (data, type, row) {
+                        var maxRating = 10;
+                        var html = '';
+                        for (var i = 0; i < row.rating; i++) {
+                            html += '<i class="fa fa-star" style="color:gray"></i>';
+                        }
+                        for (var i = 0; i < maxRating - row.rating; i++) {
+                            html += '<i class="fa fa-star-o" style="color:gray"></i>';
+                        }
+                        return html;
+                    },
+                    "targets": 5
+                },
+                {
+                    "render": function (data, type, row) {
+                        if (row.authors.length == 0) return '<span class="label label-danger">not set</span>';
+                        var innerHtml = '';
+                        for (var i = 0; i < row.authors; i++)
+                        { 
+                            var author = row.authors[i];
+                            innerHtml += '<a href="Authors/Edit/' + author.id + '">' + author.name + '</a>'
+                        }
+                        return innerHtml;
+                    },
+                    "targets": 2
+                }
+                ,
+                {
+                    "render": function (data, type, row) {
+                        var innerHtml = moment(row.published).format("MMM Do YYYY");  ;
+                        return innerHtml;
+                    },
+                    "targets": 3
+                }
+            ]
+});
+    });
+</script>

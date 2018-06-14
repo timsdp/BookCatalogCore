@@ -18,7 +18,7 @@
       "wwwroot/lib/datatables/DataTables-1.10.16/js/dataTables.bootstrap.js",
       "wwwroot/lib/datatables/Select-1.2.5/js/dataTables.select.js"
     ]
-  }
+  },
   {
     "outputFileName": "wwwroot/css/site.min.css",
     // An array of relative input file paths. Globbing patterns supported
