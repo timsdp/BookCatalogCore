@@ -15,16 +15,37 @@ namespace BC.Data.Repositories
         string connectionString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
         public List<BookEM> GetAll()
         {
-            List<BookEM> entries = new List<BookEM>();
+            List<BookEM> retVal = new List<BookEM>();
+            string query = @"SELECT B.*, A.AuthorId, A.FirstName ,A.LastName
+                            FROM [Books] AS B
+                            INNER JOIN [BooksAuthors] AS BA ON BA.BookId = B.BookId
+                            INNER JOIN [Authors] AS A ON A.AuthorId = BA.AuthorId";
+            var bookDictionary = new Dictionary<int, BookEM>();
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                entries = db.Query<BookEM>("SELECT * FROM [Books]").ToList();
+                var entries = db.Query<BookEM,AuthorEM,BookEM>(
+                    query
+                    ,(book,author) =>
+                    {
+                        BookEM bookEntry=null;
+                        if (bookDictionary.TryGetValue(book.BookId, out book))
+                        {
+                            bookEntry = book;
+                            bookEntry.Authors = new List<AuthorEM>();
+                            bookDictionary.Add(bookEntry.BookId, bookEntry);
+                        }
+                        bookEntry.Authors.Add(author);
+                        return bookEntry;
+                    }, splitOn: "BookId")
+                    .Distinct()
+                    .ToList();
             }
-            return entries;
+            return retVal;
         }
 
         public BookEM Get(int id)
         {
+
             BookEM BookEM = null;
             using (IDbConnection db = new SqlConnection(connectionString))
             {
