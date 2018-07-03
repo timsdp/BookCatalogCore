@@ -18,6 +18,9 @@ namespace BC.Data.Entity.Authors
         public string ExtraInfo { get; set; }
         public string Quote { get; set; }
 
-
+        public override string ToString()
+        {
+            return $"[{AuthorId}] {FirstName} {LastName} ({YearBorn-YearDied})";
+        }
     }
 }

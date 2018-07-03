@@ -15,5 +15,15 @@ namespace BC.Data.Entity.Books
         public int PagesCount { get; set; }
         public int Rating { get; set; }
         public List<AuthorEM> Authors { get; set; }
+
+
+        public BookEM()
+        {
+            this.Authors = new List<AuthorEM>();
+        }
+        public override string ToString()
+        {
+            return $"[{BookId}] {Name} ({Authors.Count})";
+        }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -20,28 +21,39 @@ namespace BC.Data.Repositories
                             FROM [Books] AS B
                             INNER JOIN [BooksAuthors] AS BA ON BA.BookId = B.BookId
                             INNER JOIN [Authors] AS A ON A.AuthorId = BA.AuthorId";
+
             var bookDictionary = new Dictionary<int, BookEM>();
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var entries = db.Query<BookEM,AuthorEM,BookEM>(
+                retVal = db.Query<BookEM,AuthorEM,BookEM>(
                     query
                     ,(book,author) =>
                     {
-                        BookEM bookEntry=null;
-                        if (bookDictionary.TryGetValue(book.BookId, out book))
+                        Debug.WriteLine("Book:" + book);
+                        Debug.WriteLine("Author:" + author);
+
+                        BookEM bookEntry;
+                        if (!bookDictionary.TryGetValue(book.BookId, out bookEntry))
                         {
-                            bookEntry = book;
+                            bookDictionary.Add(book.BookId, bookEntry=book);
+                        }
+                        if (bookEntry.Authors==null)
+                        {
                             bookEntry.Authors = new List<AuthorEM>();
-                            bookDictionary.Add(bookEntry.BookId, bookEntry);
                         }
                         bookEntry.Authors.Add(author);
+
+                        Debug.WriteLine("BookEntry:" + bookEntry);
+                        Debug.WriteLine("----------------------------------");
                         return bookEntry;
-                    }, splitOn: "BookId")
+                    }, splitOn:"AuthorId")
                     .Distinct()
                     .ToList();
             }
+
             return retVal;
         }
+
 
         public BookEM Get(int id)
         {
