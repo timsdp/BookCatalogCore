@@ -14,17 +14,61 @@ namespace BC.Data.Repositories
     public class BooksRepository
     {
         string connectionString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
-        public List<BookEM> GetAll()
+
+
+        // Used sources:
+        // http://dapper-tutorial.net/result-multi-mapping
+        // https://stackoverflow.com/questions/20492071/simple-inner-join-result-with-dapper
+        public List<BookEM> GetAll(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
             List<BookEM> retVal = new List<BookEM>();
-            string query = @"SELECT B.*, A.AuthorId, A.FirstName ,A.LastName
+            string whereClause = string.Empty;
+            if (!string.IsNullOrWhiteSpace(searchBy))
+            {
+                whereClause = "WHERE ";
+                string[] searchWords = searchBy.Split(" ");
+                for (int i = 0; i < searchWords.Length; i++)
+                {
+                    whereClause += $"B.Name LIKE '%{searchWords[i]}%'";
+                    if (i != searchWords.Length - 1) whereClause += " AND ";
+                }
+            }
+
+            string orderColumn = string.Empty;
+            switch (sortBy.ToLower())
+            {
+                case "pages":
+                    orderColumn = "B.PagesCount";
+                    break;
+                case "rating":
+                    orderColumn = "B.Rating";
+                    break;
+                case "date":
+                    orderColumn = "B.DatePublished";
+                    break;
+                case "name":    
+                default:
+                    orderColumn = "B.Name";
+                    break;
+            }
+
+            string orderDirection = sortDir ? "ASC" : "DESC";
+
+
+
+            string query = $@"SELECT B.*, A.AuthorId, A.FirstName ,A.LastName
                             FROM [Books] AS B
                             INNER JOIN [BooksAuthors] AS BA ON BA.BookId = B.BookId
-                            INNER JOIN [Authors] AS A ON A.AuthorId = BA.AuthorId";
+                            INNER JOIN [Authors] AS A ON A.AuthorId = BA.AuthorId
+                            {whereClause}
+                            ORDER BY {orderColumn} {orderDirection}
+                            OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY
+";
 
             var bookDictionary = new Dictionary<int, BookEM>();
             using (IDbConnection db = new SqlConnection(connectionString))
             {
+                
                 retVal = db.Query<BookEM,AuthorEM,BookEM>(
                     query
                     ,(book,author) =>
@@ -49,11 +93,13 @@ namespace BC.Data.Repositories
                     }, splitOn:"AuthorId")
                     .Distinct()
                     .ToList();
+
+                totalResultsCount = db.QuerySingle<int>("SELECT COUNT(*) FROM [Books]");
+                filteredResultsCount = retVal.Count();
             }
 
             return retVal;
         }
-
 
         public BookEM Get(int id)
         {

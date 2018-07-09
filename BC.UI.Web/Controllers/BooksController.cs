@@ -78,20 +78,9 @@ namespace BC.UI.Web.Controllers
                 sortDir = true;
             }
 
-            var allEntries = booksRepo.GetAll();
-            var filteredEntries = allEntries;
+            var entries = booksRepo.GetAll(searchBy,take,skip,sortBy,sortDir,out filteredResultsCount,out totalResultsCount);
 
-            if (!string.IsNullOrEmpty(searchBy))
-            {
-                filteredEntries = allEntries.Where(e => e.Name.Contains(searchBy) || e.Name.Contains(searchBy)).ToList();
-            }
-            var pagedEntries = sortDir ? filteredEntries.OrderBy(e => e.Name).ToList() : filteredEntries.OrderByDescending(e => e.Name).ToList();
-            pagedEntries = pagedEntries.Skip(skip).Take(take).ToList();
-
-            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
-            filteredResultsCount = filteredEntries.Count();
-            totalResultsCount = allEntries.Count();
-            var resultVm = Mapper.Map<List<BookVM>>(pagedEntries);
+            var resultVm = Mapper.Map<List<BookVM>>(entries);
             return resultVm;
         }
         #endregion
