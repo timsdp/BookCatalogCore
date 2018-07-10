@@ -95,7 +95,7 @@ namespace BC.Data.Repositories
                     .ToList();
 
                 totalResultsCount = db.QuerySingle<int>("SELECT COUNT(*) FROM [Books]");
-                filteredResultsCount = retVal.Count();
+                filteredResultsCount = db.QuerySingle<int>($"SELECT COUNT(*) FROM [Books] {whereClause}");
             }
 
             return retVal;

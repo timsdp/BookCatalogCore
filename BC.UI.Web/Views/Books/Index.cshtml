@@ -28,14 +28,48 @@
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
+</div>
+
+<div class="modal" id="modalAuthorEdit" tabindex="-1" role="dialog" aria-labelledby="modalAuthorEdit">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit author</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("../Authors/_Edit")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalBookEdit" tabindex="-1" role="dialog" aria-labelledby="modalAuthorEdit">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit book</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -47,8 +81,9 @@
     ajax: {
         url: "@Url.Action("GetAll", "Books")",
         type: 'POST'
-    },
-    language: {
+            },
+        rowId: 'id',
+        language: {
         "search": "",
         "searchPlaceholder": "Search..."
     },
@@ -64,8 +99,8 @@
             columnDefs: [
                 {
                     "render": function (data, type, row) {
-                        return '<a href="Books/Edit/'+ data.id +'"><i class="fa fa-edit" style="color:gray"></i></a>' +
-                            '<a href="Books/Delete/' + data.id +'"><i class="fa fa-remove" style="color:gray"></i></a>';
+                        return '<a href="#" class="edit"><i class="fa fa-edit" style="color:gray"></i></a>' +
+                            '<a href="#" class="remove"><i class="fa fa-remove" style="color:gray"></i></a>';
                     },
                     "targets": 6
                 },
@@ -88,9 +123,9 @@
                         if (row.authors.length == 0) return '<span class="label label-danger">not set</span>';
                         var innerHtml = '';
                         for (var i = 0; i < row.authors.length; i++)
-                        { 
+                        {
                             var author = row.authors[i];
-                            innerHtml += '<a href="Authors/Edit/' + author.id + '">' + author.fullName + '</a>'
+                            innerHtml += '<a href="#" class="author-edit" id="' + author.id + '">' + author.fullName + '</a>'
                             if (i != row.authors.length - 1) innerHtml += ", ";
                         }
                         return innerHtml;
@@ -105,7 +140,36 @@
                     },
                     "targets": 3
                 }
-            ]
-});
+            ],
+            initComplete: function (settings, json) {
+                initButtons();
+            }
+        });
+
+
     });
+    function ShowModalAuthorEdit(bookId) {
+        $('#modalAuthorEdit').appendTo("body").modal('show');
+    }
+    function ShowModalBookEdit(bookId) {
+        $('#modalBookEdit').appendTo("body").modal('show');
+    }
+    function ShowPromptBookRemove(bookId) {
+        bootbox.confirm('Are you sure want to delete this book?', function () { console.log('deleted');});
+    }
+
+    function initButtons() {
+        $('tr td a.author-edit').click(function () {
+            var rowId = $(this).attr('id');
+            ShowModalAuthorEdit(rowId);
+        });
+        $('tr td a.edit').click(function () {
+            var rowId = $(this).parent().parent().attr('id');
+            ShowModalBookEdit(rowId);
+        });
+        $('tr td a.remove').click(function () {
+            var rowId = $(this).parent().parent().attr('id');
+            ShowPromptBookRemove(rowId);
+        });
+    }
 </script>
