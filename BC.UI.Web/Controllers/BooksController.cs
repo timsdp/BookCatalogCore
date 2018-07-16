@@ -19,9 +19,11 @@ namespace BC.UI.Web.Controllers
             return View();
         }
 
+
+
         public IActionResult Edit(int id)
         {
-            return View();
+            return View("_Edit");
         }
 
         [HttpPost]

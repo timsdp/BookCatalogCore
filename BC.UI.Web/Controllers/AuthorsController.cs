@@ -16,12 +16,14 @@ namespace BC.UI.Web.Controllers
         AuthorsRepository authorsRepo = new AuthorsRepository();
         public IActionResult Index()
         {
-            //return View(authorsRepo.GetAuthors());
-            //return View(new List<AuthorVM>());
+            return View();
+        }
 
-            var authors = authorsRepo.GetAuthors();
-            var vm = Mapper.Map<IEnumerable<AuthorVM>>(authors);
-            return View(vm);
+        public JsonResult Get(int id)
+        {
+            AuthorEM entityModel = authorsRepo.Get(id);
+            AuthorVM viewModel = Mapper.Map<AuthorVM>(entityModel);
+            return new JsonResult(viewModel);
         }
 
         public IActionResult Edit(int id)
@@ -34,6 +36,8 @@ namespace BC.UI.Web.Controllers
         [HttpPost]
         public IActionResult Update(AuthorVM vm)
         {
+            AuthorEM entityModel = Mapper.Map<AuthorEM>(vm);
+            authorsRepo.Update(entityModel);
             return Json(new { Err= 0, Msg = "Success"});
         }
 

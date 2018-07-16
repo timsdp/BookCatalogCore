@@ -43,12 +43,21 @@ namespace BC.Data.Repositories
             return AuthorEM;
         }
 
-        public void Update(AuthorEM AuthorEM)
+        public void Update(AuthorEM entity)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "UPDATE Authors SET Name = @Name, Age = @Age WHERE Id = @Id";
-                db.Execute(sqlQuery, AuthorEM);
+                var sqlQuery = @"UPDATE [dbo].[Authors]
+                       SET [FirstName] = @FirstName
+                          ,[LastName] = @LastName
+                          ,[YearBorn] = @YearBorn
+                          ,[YearDied] = @YearDied
+                          ,[Country] = @Country
+                          ,[Quote] = @Quote
+                          ,[Rating] = @Rating
+                          ,[ExtraInfo] = @ExtraInfo
+                     WHERE AuthorId=@AuthorId";
+                db.Execute(sqlQuery, entity);
             }
         }
 

@@ -19,8 +19,10 @@ namespace BC.Bootstrap.MapperProfiles
             .ForMember(vm => vm.Born, em => em.MapFrom(s => s.YearBorn));
 
 
-            mapperConfig.CreateMap<AuthorVM, AuthorEM>();
-
+            mapperConfig.CreateMap<AuthorVM, AuthorEM>()
+                .ForMember(em => em.AuthorId, vm => vm.MapFrom(s => s.Id))
+            .ForMember(em => em.YearBorn, vm => vm.MapFrom(s => s.Born))
+            .ForMember(em => em.YearDied, vm => vm.MapFrom(s => s.Died));
         }
     }
 }

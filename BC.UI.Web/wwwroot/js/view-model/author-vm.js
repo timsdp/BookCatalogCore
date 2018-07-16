@@ -12,34 +12,42 @@ var Author = Author || {};
     self.VM = {
         //Observable fields
         Id: 999,
-        FirstName : ko.observable("Jack"),
-        LastName : ko.observable("London"),
+        FirstName : ko.observable(""),
+        LastName : ko.observable(""),
         FullName : ko.pureComputed(function () { return self.VM.FirstName() + " " + self.VM.LastName(); }),
-        Country : ko.observable("USA"),
-        Quote : ko.observable("Famous authors quote value"),
-        BooksCount : ko.observable(28),
-        Born : ko.observable(1865),
-        Died: ko.observable(1930),
-        Rating: ko.observable(3),
+        Country : ko.observable(""),
+        Quote : ko.observable(""),
+        BooksCount : -1,
+        Born : ko.observable(-1),
+        Died: ko.observable(-1),
+        Rating: ko.observable(0),
         TopBooks : ["Book name 1", "Book name 2", "Book name 3", "Book name 4"],
         IsFavourite : ko.observable(true),
-        Wiki : ko.observable("https://en.wikipedia.org/wiki/Jack_London")
+        Wiki : ko.observable("https://nourl")
     }
 
-    self.GetVM = function () {
-        console.log("Post Author to server...");
-        var dto = ko.toJS(self.VM);
-        console.log("json: " + dto);
-        console.log(self.UrlSaveVm);
-        $.ajax({
-            url: self.UrlSaveVm,
-            data: dto,
-            type: 'GET',
-            contentType: 'application/x-www-form-urlencoded'
-        }).success(function () { console.log('Save: success!'); toastr.success('Update Success!'); }).error(function () { console.log('Save: error!'); toastr.error('Update error'); });
+    self.InitVM = function (entryId) {
+        console.log("Fetching Author from server...");
+        $.getJSON(self.UrlGetVm + '/?id=' + entryId, function (data) {
+            var model = data;
+            //Init each property by new value
+            self.VM.Id = model.id;
+            self.VM.FirstName(model.firstName);
+            self.VM.LastName(model.lastName);
+            self.VM.Country(model.country);
+            self.VM.Quote(model.quote);
+            self.VM.BooksCount = -1;
+            self.VM.Born(model.born);
+            self.VM.Died(model.died);
+            self.VM.Rating(model.rating);
+            self.VM.TopBooks = ["Book name 1", "Book name 2", "Book name 3", "Book name 4"];
+            self.VM.IsFavourite(-1);
+            self.VM.Wiki(model.wiki);
+            //Or we can use automatic mapping http://knockoutjs.com/documentation/plugins-mapping.html
+        });
     }
 
-    self.SaveVM = function () {
+    self.SaveVMHandler = function () {
         console.log("Post Author to server...");
         var dto = ko.toJS(self.VM);
         console.log("json: " + dto);
