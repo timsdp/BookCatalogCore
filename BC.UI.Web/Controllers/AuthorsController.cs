@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BC.Business.Author;
 using BC.Data.Entity.Authors;
 using BC.Data.Repositories;
 using BC.UI.Web.Models.Datatable;
@@ -13,7 +14,7 @@ namespace BC.UI.Web.Controllers
 {
     public class AuthorsController : BaseController
     {
-        AuthorsRepository authorsRepo = new AuthorsRepository();
+        AuthorService authorService = new AuthorService(@"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True");
         public IActionResult Index()
         {
             return View();
@@ -21,8 +22,7 @@ namespace BC.UI.Web.Controllers
 
         public JsonResult Get(int id)
         {
-            AuthorEM entityModel = authorsRepo.Get(id);
-            AuthorVM viewModel = Mapper.Map<AuthorVM>(entityModel);
+            AuthorVM viewModel = authorService.Get(id);
             return new JsonResult(viewModel);
         }
 
@@ -36,8 +36,7 @@ namespace BC.UI.Web.Controllers
         [HttpPost]
         public IActionResult Update(AuthorVM vm)
         {
-            AuthorEM entityModel = Mapper.Map<AuthorEM>(vm);
-            authorsRepo.Update(entityModel);
+            authorService.Update(vm);
             return Json(new { Err= 0, Msg = "Success"});
         }
 
@@ -95,7 +94,7 @@ namespace BC.UI.Web.Controllers
                 sortDir = true;
             }
 
-            var allEntries = authorsRepo.GetAuthors();
+            var allEntries = authorService.GetAll();
             var filteredEntries = allEntries;
 
             if (!string.IsNullOrEmpty(searchBy))

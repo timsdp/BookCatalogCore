@@ -4,4 +4,14 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Book\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BC.Bootstrap\BC.Bootstrap.csproj" />
+    <ProjectReference Include="..\BC.Data\BC.Data.csproj" />
+    <ProjectReference Include="..\BC.Infrastructure\BC.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

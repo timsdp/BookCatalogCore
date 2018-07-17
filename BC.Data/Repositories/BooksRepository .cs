@@ -13,7 +13,12 @@ namespace BC.Data.Repositories
 {
     public class BooksRepository
     {
-        string connectionString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
+        string connectionString = string.Empty;
+
+        public BooksRepository(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
 
 
         // Used sources:

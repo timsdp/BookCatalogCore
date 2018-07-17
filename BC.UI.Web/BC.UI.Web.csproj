@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BC.Bootstrap\BC.Bootstrap.csproj" />
+    <ProjectReference Include="..\BC.Business\BC.Business.csproj" />
     <ProjectReference Include="..\BC.Data\BC.Data.csproj" />
   </ItemGroup>
 

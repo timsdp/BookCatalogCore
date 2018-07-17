@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BC.Business.Authors
+namespace BC.Infrastructure.Interfaces.Service
 {
-    public class AuthorDM
+    public interface IBookService
     {
     }
 }

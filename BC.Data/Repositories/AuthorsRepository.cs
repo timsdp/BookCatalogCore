@@ -11,8 +11,15 @@ namespace BC.Data.Repositories
 {
     public class AuthorsRepository
     {
-        string connectionString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
-        public List<AuthorEM> GetAuthors()
+        string connectionString = string.Empty;
+
+        public AuthorsRepository(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
+
+        public List<AuthorEM> GetAll()
         {
             List<AuthorEM> authors = new List<AuthorEM>();
             using (IDbConnection db = new SqlConnection(connectionString))
