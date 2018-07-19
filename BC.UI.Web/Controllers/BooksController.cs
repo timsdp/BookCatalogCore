@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BC.UI.Web.Controllers
 {
-    public class BooksController : Controller
+    public class BooksController : BaseController
     {
         IBookService bookService;
         IAuthorService authorService;
@@ -33,11 +33,17 @@ namespace BC.UI.Web.Controllers
             return View();
         }
 
-
-
-        public IActionResult Edit(int id)
+        public JsonResult Get(int id)
         {
-            return View("_Edit");
+            BookVM viewModel = bookService.GetById(id);
+            return new JsonResult(viewModel);
+        }
+
+        [HttpPost]
+        public JsonResult Remove(int id)
+        {
+            bookService.Remove(id);
+            return response(0, "Success");
         }
 
         [HttpPost]

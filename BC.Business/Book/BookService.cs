@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using BC.Data.Entity.Authors;
 using BC.Data.Entity.Books;
 using BC.Data.Repositories;
 using BC.Infrastructure.Interfaces.Repository;
 using BC.Infrastructure.Interfaces.Service;
+using BC.ViewModel;
 using BC.ViewModel.Books;
 using System;
 using System.Collections.Generic;
@@ -43,12 +45,17 @@ namespace BC.Business.Book
 
         public BookVM GetById(int id)
         {
-            throw new NotImplementedException();
+            BookEM entity = bookRepository.Get(id);
+            IEnumerable<AuthorEM> authorsEm = authorRepository.GetByBook(id);
+            List<AuthorVM> authorsVm = Mapper.Map<List<AuthorVM>>(authorsEm);
+            BookVM retVal = Mapper.Map<BookVM>(entity);
+            retVal.Authors = authorsVm;
+            return retVal;
         }
 
         public void Remove(int bookId)
         {
-            throw new NotImplementedException();
+            bookRepository.Remove(bookId);
         }
 
         public void Update(BookVM entity)

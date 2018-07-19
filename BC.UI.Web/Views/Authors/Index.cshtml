@@ -4,7 +4,7 @@
     ViewBag.Title = "Authors";
 }
 
-
+<script src="~/js/view-model/author-VM.js"></script>
 
 <div class="container-fluid">
     <div class="row">
@@ -38,7 +38,7 @@
     </div>
 </div>
 
-
+@Html.Partial("_ModalEdit");
 
 <script>
     $(document).ready(function () {
@@ -46,6 +46,7 @@
     proccessing: true,
             serverSide: true,
             stateSave: true,
+            rowId: 'id',
     ajax: {
         url: "@Url.Action("GetAll", "Authors")",
         type: 'POST'
@@ -110,11 +111,16 @@
             var rowId = $(this).parent().parent().attr('id');
             ShowPromptAuthorRemove(rowId);
         });
-        function ShowModalAuthorEdit(bookId) {
-            $('#modalBookEdit').appendTo("body").modal('show');
+        function ShowModalAuthorEdit(authorId) {
+            Author.InitVM(authorId);
+            $('#modalAuthorEdit').appendTo("body").modal('show');
         }
-        function ShowPromptAuthorRemove(bookId) {
-            bootbox.confirm('Are you sure want to delete this author? It will be deleted from all book as author?', function () { console.log('deleted'); });
+        function ShowPromptAuthorRemove(authorId) {
+            bootbox.confirm('Are you sure want to delete this author?', function (result) {
+                if (result) {
+                    Author.Remove(authorId);
+                }
+            });
         }
     }
 

@@ -64,8 +64,8 @@ namespace BC.Data.Repositories
 
             string query = $@"SELECT B.*, A.AuthorId, A.FirstName ,A.LastName
                             FROM [Books] AS B
-                            INNER JOIN [BooksAuthors] AS BA ON BA.BookId = B.BookId
-                            INNER JOIN [Authors] AS A ON A.AuthorId = BA.AuthorId
+                            LEFT JOIN [BooksAuthors] AS BA ON BA.BookId = B.BookId
+                            LEFT JOIN [Authors] AS A ON A.AuthorId = BA.AuthorId
                             {whereClause}
                             ORDER BY {orderColumn} {orderDirection}
                             OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY
@@ -91,7 +91,11 @@ namespace BC.Data.Repositories
                         {
                             bookEntry.Authors = new List<AuthorEM>();
                         }
-                        bookEntry.Authors.Add(author);
+                        if (author!=null)
+                        {
+                            bookEntry.Authors.Add(author);
+                        }
+                        
 
                         Debug.WriteLine("BookEntry:" + bookEntry);
                         Debug.WriteLine("----------------------------------");
@@ -158,7 +162,13 @@ namespace BC.Data.Repositories
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                var sqlQuery = @"
+                    DELETE FROM BooksAuthors WHERE BookId = @id
+                    DELETE FROM Books WHERE BookId = @id";
+                db.Execute(sqlQuery, new { id });
+            }
         }
 
         public IEnumerable<BookEM> GetByAuthor(int id)

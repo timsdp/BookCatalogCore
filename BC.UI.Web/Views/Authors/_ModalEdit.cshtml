@@ -4,168 +4,169 @@
     ViewBag.Title = "Edit author";
 }
 
-<script src="~/js/view-model/author-VM.js"></script>
- 
-    <div class="modal" id="modalAuthorEdit" tabindex="-1" role="dialog" aria-labelledby="modalAuthorEdit">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Edit author</h4>
-
-                </div>
-                <div class="modal-body">
 
 
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-5">
-                                <div class="card card-user">
-                                    <div class="image">
-                                        <img src="~/images/author-bg.jpg" alt="...">
+<div class="modal" id="modalAuthorEdit" tabindex="-1" role="dialog" aria-labelledby="modalAuthorEdit">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit author</h4>
+
+            </div>
+            <div class="modal-body">
+
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-5">
+                            <div class="card card-user">
+                                <div class="image">
+                                    <img src="~/images/author-bg.jpg" alt="...">
+                                </div>
+                                <div class="content">
+                                    <div class="author">
+                                        <img class="avatar border-white" src="~/images/author-default.jpg" alt="...">
+                                        <h4 class="title">
+                                            <span data-bind="text:VM.FullName">Jack London</span><i class="fa fa-star" style="color:red"></i><br>
+                                            <!--Example of attribute binding-->
+                                            <a href="https://en.wikipedia.org/wiki/Jack_London" data-bind="attr: {href: VM.Wiki}" target="_blank"><small>Wikipedia</small></a>
+                                        </h4>
+
                                     </div>
-                                    <div class="content">
-                                        <div class="author">
-                                            <img class="avatar border-white" src="~/images/author-default.jpg" alt="...">
-                                            <h4 class="title">
-                                                <span data-bind="text:VM.FullName">Jack London</span><i class="fa fa-star" style="color:red"></i><br>
-                                                <!--Example of attribute binding-->
-                                                <a href="https://en.wikipedia.org/wiki/Jack_London" data-bind="attr: {href: VM.Wiki}" target="_blank"><small>Wikipedia</small></a>
-                                            </h4>
+                                    <p class="description text-center" data-bind="text:VM.Quote">Famous authors quote value</p>
+                                </div>
+                                <hr>
+                                <div class="text-center">
+                                    <div class="row">
+                                        <div class="col-md-3 col-md-offset-1">
+                                            <h5><span data-bind="text:VM.BooksCount">99</span><br><small>Books</small></h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h5><span data-bind="text:VM.Born">999</span><br><small>Born</small></h5>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h5><span data-bind="text:VM.Died">9999</span><br><small>Died</small></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Top books</h4>
+                                </div>
+                                <div class="content">
+                                    <!--Example of array binding. Declare foreach-->
+                                    <ul class="list-unstyled team-members" data-bind="foreach: VM.TopBooks">
+                                        <li>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <div class="avatar">
+                                                        <i class="nc-icon nc-album"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <!--Example of array binding. Using-->
+                                                    <span data-bind="text: $data.name">Book name 1</span>
+                                                    <br>
+                                                    <span class="text-muted"><small>About something</small></span>
+                                                </div>
+
+                                                <div class="col-xs-3 text-right">
+                                                    <btn class="btn btn-sm btn-success btn-icon"><i class="fa fa-book"></i></btn>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-7">
+                            <div class="card">
+
+                                <div class="header">
+                                    <h4 class="title">Edit Info</h4>
+                                </div>
+                                <div class="content">
+                                    <form id="authorEditForm">
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>First Name</label>
+                                                    <input type="text" class="form-control border-input" placeholder="First Name" data-bind="value:VM.FirstName" id="firstName" name="firstName">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Last Name</label>
+                                                    <input type="text" class="form-control border-input" placeholder="Last Name" data-bind="value:VM.LastName" id="lastName" name="lastName">
+                                                </div>
+                                            </div>
 
                                         </div>
-                                        <p class="description text-center" data-bind="text:VM.Quote">Famous authors quote value</p>
-                                    </div>
-                                    <hr>
-                                    <div class="text-center">
+
                                         <div class="row">
-                                            <div class="col-md-3 col-md-offset-1">
-                                                <h5><span data-bind="text:VM.BooksCount">99</span><br><small>Books</small></h5>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    <input class="form-control border-input" placeholder="Country born" data-bind="value:VM.Country" id="country" name="country">
+                                                </div>
                                             </div>
                                             <div class="col-md-4">
-                                                <h5><span data-bind="text:VM.Born">999</span><br><small>Born</small></h5>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Date of birth</label>
+                                                    <input class="form-control border-input" placeholder="Date of birth" data-bind="value:VM.Born" id="born" name="born">
+                                                </div>
                                             </div>
-                                            <div class="col-md-3">
-                                                <h5><span data-bind="text:VM.Died">9999</span><br><small>Died</small></h5>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Date of death</label>
+                                                    <input class="form-control border-input" placeholder="Date of death" data-bind="value:VM.Died" id="died" name="died">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="header">
-                                        <h4 class="title">Top books</h4>
-                                    </div>
-                                    <div class="content">
-                                        <!--Example of array binding. Declare foreach-->
-                                        <ul class="list-unstyled team-members" data-bind="foreach: VM.TopBooks">
-                                            <li>
-                                                <div class="row">
-                                                    <div class="col-xs-3">
-                                                        <div class="avatar">
-                                                            <i class="nc-icon nc-album"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <!--Example of array binding. Using-->
-                                                        <span data-bind="text: $data.name">Book name 1</span>
-                                                        <br>
-                                                        <span class="text-muted"><small>About something</small></span>
-                                                    </div>
-
-                                                    <div class="col-xs-3 text-right">
-                                                        <btn class="btn btn-sm btn-success btn-icon"><i class="fa fa-book"></i></btn>
-                                                    </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Wikipedia link</label>
+                                                    <input class="form-control border-input" placeholder="Url" data-bind="value:VM.Wiki">
                                                 </div>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Famous quote</label>
+                                                    <textarea rows="5" class="form-control border-input" placeholder="Here can be your description" data-bind="value:VM.Quote"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </form>
                                 </div>
+
                             </div>
-                            <div class="col-lg-8 col-md-7">
-                                <div class="card">
-
-                                    <div class="header">
-                                        <h4 class="title">Edit Info</h4>
-                                    </div>
-                                    <div class="content">
-                                        <form id="authorEditForm">
-                                            
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>First Name</label>
-                                                        <input type="text" class="form-control border-input" placeholder="First Name" data-bind="value:VM.FirstName" id="firstName" name="firstName">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Last Name</label>
-                                                        <input type="text" class="form-control border-input" placeholder="Last Name" data-bind="value:VM.LastName" id="lastName" name="lastName">
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label>Country</label>
-                                                        <input class="form-control border-input" placeholder="Country born" data-bind="value:VM.Country" id="country" name="country">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1">Date of birth</label>
-                                                        <input class="form-control border-input" placeholder="Date of birth" data-bind="value:VM.Born"  id="born" name="born">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1">Date of death</label>
-                                                        <input class="form-control border-input" placeholder="Date of death" data-bind="value:VM.Died" id="died" name="died">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Wikipedia link</label>
-                                                        <input class="form-control border-input" placeholder="Url" data-bind="value:VM.Wiki">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <label>Famous quote</label>
-                                                        <textarea rows="5" class="form-control border-input" placeholder="Here can be your description" data-bind="value:VM.Quote"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                        </form>
-                                    </div>
-
-                                </div>
-                            </div>
-
-
                         </div>
-                    </div>
 
+
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button data-bind="click: SaveVMHandler" type="submit" class="btn btn-primary">Save and close</button>
-                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button data-bind="click: SaveVMHandler" type="submit" class="btn btn-primary">Save and close</button>
             </div>
         </div>
     </div>
+</div>
 
 <script>
 
     $(document).ready(function () {
-        ko.applyBindings(Author);
+        ko.applyBindings(Author, $('#modalAuthorEdit')[0]);
+        
         //Subscribe example: check changed value
         Author.VM.Born.subscribe(function (newValue) { if (newValue > 2000) alert("Age seems like invalid! Check is It true?"); });
 
@@ -174,8 +175,7 @@
         Author.UrlRemoveVm = '@Url.Action("Remove","Authors")';
 
         Author.EditModalId = '#modalAuthorEdit';
-        Author.DataTableId = '#tableBooks';
-        //$('#btnApply').click(function () { Author.SaveVM()});
+        Author.DataTableId = '#tableAuthors';
 
         $('#authorEditForm').validate({
             // Specify validation rules
@@ -205,7 +205,7 @@
                 lastName: "Please enter lastname",
                 country: "Please enter country",
                 born: "Please enter valid born year"
-            } 
+            }
         });
 
     });

@@ -154,7 +154,12 @@ namespace BC.Data.Repositories
 
         public IEnumerable<AuthorEM> GetByBook(int bookId)
         {
-            throw new NotImplementedException();
+            List<AuthorEM> authors = new List<AuthorEM>();
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                authors = db.Query<AuthorEM>("SELECT * FROM Authors AS A INNER JOIN BooksAuthors AS AB ON AB.AuthorId = A.AuthorId WHERE AB.BookId=@bookIdParam", new { bookIdParam=bookId}).ToList();
+            }
+            return authors;
         }
     }
 }

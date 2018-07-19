@@ -79,8 +79,8 @@ var Author = Author || {};
             .error(function () { console.log('Save: error!'); toastr.error('Update error'); });
     }
 
-    self.Remove = function (bookId) {
-        var dto = ko.toJS({ id: bookId });
+    self.Remove = function (authorId) {
+        var dto = ko.toJS({ id: authorId });
         $.ajax({
             url: self.UrlRemoveVm,
             data: dto,
@@ -91,7 +91,7 @@ var Author = Author || {};
                 toastr.error('Error! ' + data.msg);
                 return;
             }
-            toastr.success('Book was removed!');
+            toastr.success('Author was removed!');
             $(self.DataTableId).DataTable().ajax.reload(null, false);
         })
             .error(function () { console.log('Removing: error!'); toastr.error('Removing error'); });
