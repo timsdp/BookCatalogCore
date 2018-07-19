@@ -63,7 +63,8 @@ namespace BC.Business.Author
 
         public IEnumerable<AuthorVM> GetAllFiltered(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
-            throw new NotImplementedException();
+            IEnumerable<AuthorEM> entities = authorRepository.GetAllFiltered(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
+            return Mapper.Map<IEnumerable<AuthorVM>>(entities);
         }
 
         public bool CheckExist(AuthorVM vm)

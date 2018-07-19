@@ -70,26 +70,22 @@ namespace BC.UI.Web.Controllers
 
             if (model.order != null)
             {
-                // in this example we just default sort on the 1st column
                 sortBy = model.columns[model.order[0].column].data;
                 sortDir = model.order[0].dir.ToLower() == "asc";
             }
 
-            // search the dbase taking into consideration table sorting and paging
-            var result = getDataFromDb(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
+            var result = getData(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
             if (result == null)
             {
-                // empty collection...
                 return new List<BookVM>();
             }
             return result;
         }
 
-        private List<BookVM> getDataFromDb(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
+        private List<BookVM> getData(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
             if (String.IsNullOrEmpty(searchBy))
             {
-                // if we have an empty search then just order the results by Id ascending
                 sortBy = "Id";
                 sortDir = true;
             }

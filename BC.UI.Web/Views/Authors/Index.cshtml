@@ -66,8 +66,8 @@
             columnDefs: [
                 {
                     "render": function (data, type, row) {
-                        return '<a href="Authors/Edit/'+ data.authorId +'"><i class="fa fa-edit" style="color:gray"></i></a>' +
-                            '<a href="Authors/Delete/' + data.authorId +'"><i class="fa fa-remove" style="color:gray"></i></a>';
+                        return '<a href="#" class="edit"><i class="fa fa-edit" style="color:gray"></i></a>' +
+                            '<a href="#" class="remove"><i class="fa fa-remove" style="color:gray"></i></a>';
                     },
                     "targets": 6
                 },
@@ -91,7 +91,31 @@
                     },
                     "targets": 3
                 }
-            ]
-});
+            ],
+            fnDrawCallback: function (oSettings) {
+                console.log('Table is redrawn.');
+                initTableButtons();
+            }
+        });
+
+
     });
+
+    function initTableButtons() {
+        $('tr td a.edit').click(function () {
+            var rowId = $(this).parent().parent().attr('id');
+            ShowModalAuthorEdit(rowId);
+        });
+        $('tr td a.remove').click(function () {
+            var rowId = $(this).parent().parent().attr('id');
+            ShowPromptAuthorRemove(rowId);
+        });
+        function ShowModalAuthorEdit(bookId) {
+            $('#modalBookEdit').appendTo("body").modal('show');
+        }
+        function ShowPromptAuthorRemove(bookId) {
+            bootbox.confirm('Are you sure want to delete this author? It will be deleted from all book as author?', function () { console.log('deleted'); });
+        }
+    }
+
 </script>

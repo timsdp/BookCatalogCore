@@ -93,5 +93,69 @@ namespace BC.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<AuthorEM> GetAllFiltered(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
+        {
+            List<AuthorEM> retVal = new List<AuthorEM>();
+            string whereClause = string.Empty;
+            if (!string.IsNullOrWhiteSpace(searchBy))
+            {
+                whereClause = "WHERE ";
+                string[] searchWords = searchBy.Split(" ");
+                for (int i = 0; i < searchWords.Length; i++)
+                {
+                    whereClause += $"(A.FirstName LIKE '%{searchWords[i]}%' OR A.LastName LIKE '%{searchWords[i]}%')";
+                    if (i != searchWords.Length - 1) whereClause += " AND ";
+                }
+            }
+
+            string orderColumn = string.Empty;
+            switch (sortBy.ToLower())
+            {
+                case "rating":
+                    orderColumn = "A.Rating";
+                    break;
+                case "country":
+                    orderColumn = "A.Country";
+                    break;
+                case "born":
+                    orderColumn = "A.YearBorn";
+                    break;
+                case "died":
+                    orderColumn = "A.YearDied";
+                    break;
+                case "fullname":
+                default:
+                    orderColumn = "A.LastName";
+                    break;
+            }
+
+            string orderDirection = sortDir ? "ASC" : "DESC";
+
+
+
+            string query = $@"SELECT A.AuthorId, A.FirstName ,A.LastName, A.YearBorn, A.YearDied, A.Country, A.Rating
+                            FROM [Authors] AS A
+                            {whereClause}
+                            ORDER BY {orderColumn} {orderDirection}
+                            OFFSET {skip} ROWS FETCH NEXT {take} ROWS ONLY
+";
+
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+
+                retVal = db.Query<AuthorEM>(query).ToList();
+
+                totalResultsCount = db.QuerySingle<int>("SELECT COUNT(*) FROM [Authors] AS A");
+                filteredResultsCount = db.QuerySingle<int>($"SELECT COUNT(*) FROM [Authors]  AS A {whereClause}");
+            }
+
+            return retVal;
+        }
+
+        public IEnumerable<AuthorEM> GetByBook(int bookId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

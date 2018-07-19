@@ -90,47 +90,33 @@ namespace BC.UI.Web.Controllers
 
             if (model.order != null)
             {
-                // in this example we just default sort on the 1st column
                 sortBy = model.columns[model.order[0].column].data;
                 sortDir = model.order[0].dir.ToLower() == "asc";
             }
 
-            // search the dbase taking into consideration table sorting and paging
-            var result = getDataFromDb(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
+            var result = getData(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
             if (result == null)
             {
-                // empty collection...
                 return new List<AuthorVM>();
             }
             return result;
         }
 
-        private List<AuthorVM> getDataFromDb(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
+        private List<AuthorVM> getData(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
             if (String.IsNullOrEmpty(searchBy))
             {
-                // if we have an empty search then just order the results by Id ascending
                 sortBy = "Id";
                 sortDir = true;
             }
 
-            var allEntries = authorService.GetAll();
-            var filteredEntries = allEntries;
+            var entries = authorService.GetAllFiltered(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
 
-            if (!string.IsNullOrEmpty(searchBy))
-            {
-                filteredEntries = allEntries.Where(e => e.FirstName.Contains(searchBy) || e.LastName.Contains(searchBy)).ToList();
-            }
-            var pagedEntries = sortDir ? filteredEntries.OrderBy(e => e.FirstName).ToList() : filteredEntries.OrderByDescending(e => e.FirstName).ToList();
-            pagedEntries = pagedEntries.Skip(skip).Take(take).ToList();
-
-            // now just get the count of items (without the skip and take) - eg how many could be returned with filtering
-            filteredResultsCount = filteredEntries.Count();
-            totalResultsCount = allEntries.Count();
-            var resultVm = Mapper.Map<List<AuthorVM>>(pagedEntries);
+            var resultVm = Mapper.Map<List<AuthorVM>>(entries);
             return resultVm;
         }
-
         #endregion
+
+
     }
 }

@@ -100,8 +100,8 @@ namespace BC.Data.Repositories
                     .Distinct()
                     .ToList();
 
-                totalResultsCount = db.QuerySingle<int>("SELECT COUNT(*) FROM [Books]");
-                filteredResultsCount = db.QuerySingle<int>($"SELECT COUNT(*) FROM [Books] {whereClause}");
+                totalResultsCount = db.QuerySingle<int>("SELECT COUNT(*) FROM [Books] AS B");
+                filteredResultsCount = db.QuerySingle<int>($"SELECT COUNT(*) FROM [Books]  AS B {whereClause}");
             }
 
             return retVal;
