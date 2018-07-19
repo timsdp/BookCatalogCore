@@ -10,7 +10,7 @@ namespace BC.Infrastructure.Interfaces.Repository
         TEntity Get(int id);
         IEnumerable<TEntity> Get();
         IEnumerable<TEntity> Get(Func<TEntity, bool> predicate);
-        void Remove(TEntity item);
+        void Remove(int id);
         void Update(TEntity item);
     }
 }

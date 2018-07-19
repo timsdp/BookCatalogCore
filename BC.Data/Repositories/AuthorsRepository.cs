@@ -69,11 +69,13 @@ namespace BC.Data.Repositories
             }
         }
 
-        public void Delete(int id)
+        public void Remove(int id)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "DELETE FROM Authors WHERE AuthorId = @id";
+                var sqlQuery = @"
+                    DELETE FROM BooksAuthors WHERE AuthorId = @id
+                    DELETE FROM Authors WHERE AuthorId = @id";
                 db.Execute(sqlQuery, new { id });
             }
         }
@@ -89,9 +91,6 @@ namespace BC.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public void Remove(AuthorEM item)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

@@ -131,7 +131,11 @@
         $('#modalBookEdit').appendTo("body").modal('show');
     }
     function ShowPromptBookRemove(bookId) {
-        bootbox.confirm('Are you sure want to delete this book?', function () { console.log('deleted');});
+        bootbox.confirm('Are you sure want to delete this book?', function (result) {
+            if (result) {
+                Author.Remove(bookId);
+            }
+        });
     }
 
     function initTableButtons() {

@@ -26,7 +26,7 @@ namespace BC.Infrastructure.Interfaces.Repository
             throw new NotImplementedException();
         }
 
-        public void Remove(TEntity item)
+        public void Remove(int id)
         {
             throw new NotImplementedException();
         }

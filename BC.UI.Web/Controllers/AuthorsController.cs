@@ -38,12 +38,6 @@ namespace BC.UI.Web.Controllers
             return new JsonResult(viewModel);
         }
 
-        public IActionResult Edit(int id)
-        {
-            //var authorEM = authorsRepo.Get(id);
-            //AuthorVM vm = Mapper.Map<AuthorVM>(authorEM);
-            return View(new AuthorVM());
-        }
 
         [HttpPost]
         public IActionResult Update(AuthorVM vm)
@@ -59,6 +53,14 @@ namespace BC.UI.Web.Controllers
             authorService.Update(vm);
             return response(0,"Success");
         }
+
+        [HttpPost]
+        public JsonResult Remove(int id)
+        {
+            authorService.Remove(id);
+            return response(0, "Success");
+        }
+
 
         [HttpPost]
         public JsonResult GetAll(DataTableAjaxPostModel model)

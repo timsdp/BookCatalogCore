@@ -58,7 +58,7 @@ namespace BC.Business.Author
 
         public void Remove(int authorId)
         {
-            throw new NotImplementedException();
+            authorRepository.Remove(authorId);
         }
 
         public IEnumerable<AuthorVM> GetAllFiltered(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
