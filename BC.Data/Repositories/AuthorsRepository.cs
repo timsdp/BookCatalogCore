@@ -1,4 +1,5 @@
 ﻿using BC.Data.Entity.Authors;
+using BC.Infrastructure.Interfaces.Repository;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace BC.Data.Repositories
 {
-    public class AuthorsRepository
+    public class AuthorsRepository : IAuthorRepository
     {
         string connectionString = string.Empty;
 
@@ -39,7 +40,7 @@ namespace BC.Data.Repositories
             return AuthorEM;
         }
 
-        public AuthorEM Create(AuthorEM AuthorEM)
+        public void Create(AuthorEM AuthorEM)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
@@ -47,7 +48,6 @@ namespace BC.Data.Repositories
                 int? id = db.Query<int>(sqlQuery, AuthorEM).FirstOrDefault();
                 AuthorEM.AuthorId = id;
             }
-            return AuthorEM;
         }
 
         public void Update(AuthorEM entity)
@@ -63,6 +63,7 @@ namespace BC.Data.Repositories
                           ,[Quote] = @Quote
                           ,[Rating] = @Rating
                           ,[ExtraInfo] = @ExtraInfo
+                          ,[WikiUrl]=@WikiUrl
                      WHERE AuthorId=@AuthorId";
                 db.Execute(sqlQuery, entity);
             }
@@ -75,6 +76,22 @@ namespace BC.Data.Repositories
                 var sqlQuery = "DELETE FROM Authors WHERE AuthorId = @id";
                 db.Execute(sqlQuery, new { id });
             }
+        }
+
+
+        public IEnumerable<AuthorEM> Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<AuthorEM> Get(Func<AuthorEM, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(AuthorEM item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

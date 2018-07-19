@@ -8,5 +8,6 @@
     [Country] NVARCHAR(MAX) NULL, 
     [Quote] NVARCHAR(MAX) NULL, 
     [Rating] SMALLINT NULL, 
-    [ExtraInfo] NVARCHAR(MAX) NULL
+    [ExtraInfo] NVARCHAR(MAX) NULL, 
+    [WikiUrl] NVARCHAR(MAX) NULL
 )

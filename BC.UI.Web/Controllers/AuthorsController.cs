@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BC.Business.Author;
+using BC.Business.Book;
 using BC.Data.Entity.Authors;
 using BC.Data.Repositories;
+using BC.Infrastructure.Interfaces.Service;
 using BC.UI.Web.Models.Datatable;
 using BC.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +16,17 @@ namespace BC.UI.Web.Controllers
 {
     public class AuthorsController : BaseController
     {
-        AuthorService authorService = new AuthorService(@"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True");
+        IBookService bookService;
+        IAuthorService authorService;
+        public AuthorsController(/*IBookService bookService, IAuthorService authorService*/)
+        {
+            this.bookService = bookService;
+            this.authorService = authorService;
+
+            string connString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
+            this.authorService = new AuthorService(connString);
+            this.bookService = new BookService(connString);
+        }
         public IActionResult Index()
         {
             return View();
@@ -22,7 +34,7 @@ namespace BC.UI.Web.Controllers
 
         public JsonResult Get(int id)
         {
-            AuthorVM viewModel = authorService.Get(id);
+            AuthorVM viewModel = authorService.GetById(id);
             return new JsonResult(viewModel);
         }
 
@@ -36,8 +48,16 @@ namespace BC.UI.Web.Controllers
         [HttpPost]
         public IActionResult Update(AuthorVM vm)
         {
+            //if (authorService.CheckExist(vm))
+            //{
+            //    return response(1, "Author with provided Last and Firstname is already exists in DB");
+            //}
+            if (!ModelState.IsValid)
+            {
+                return response(1, "Server-side validation fails. Status = " + ModelState.ValidationState);
+            }
             authorService.Update(vm);
-            return Json(new { Err= 0, Msg = "Success"});
+            return response(0,"Success");
         }
 
         [HttpPost]

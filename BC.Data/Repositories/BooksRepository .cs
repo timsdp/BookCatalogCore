@@ -1,5 +1,7 @@
 ﻿using BC.Data.Entity.Authors;
 using BC.Data.Entity.Books;
+using BC.Infrastructure.Interfaces.Repository;
+using BC.ViewModel.Books;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -11,20 +13,19 @@ using System.Text;
 
 namespace BC.Data.Repositories
 {
-    public class BooksRepository
+    public class BookRepository : IBookRepository
     {
         string connectionString = string.Empty;
 
-        public BooksRepository(string connectionString)
+        public BookRepository(string connectionString)
         {
             this.connectionString = connectionString;
         }
 
-
         // Used sources:
         // http://dapper-tutorial.net/result-multi-mapping
         // https://stackoverflow.com/questions/20492071/simple-inner-join-result-with-dapper
-        public List<BookEM> GetAll(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
+        public IEnumerable<BookEM> GetAllFiltered(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
             List<BookEM> retVal = new List<BookEM>();
             string whereClause = string.Empty;
@@ -108,7 +109,6 @@ namespace BC.Data.Repositories
 
         public BookEM Get(int id)
         {
-
             BookEM BookEM = null;
             using (IDbConnection db = new SqlConnection(connectionString))
             {
@@ -117,7 +117,7 @@ namespace BC.Data.Repositories
             return BookEM;
         }
 
-        public BookEM Create(BookEM BookEM)
+        public void Create(BookEM BookEM)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
@@ -125,7 +125,6 @@ namespace BC.Data.Repositories
                 int? id = db.Query<int>(sqlQuery, BookEM).FirstOrDefault();
                 BookEM.BookId = id.Value;
             }
-            return BookEM;
         }
 
         public void Update(BookEM BookEM)
@@ -144,6 +143,32 @@ namespace BC.Data.Repositories
                 var sqlQuery = "DELETE FROM [Books] WHERE BookId = @id";
                 db.Execute(sqlQuery, new { id });
             }
+        }
+
+
+        public IEnumerable<BookEM> Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<BookEM> Get(Func<BookEM, bool> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(BookEM item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<BookEM> GetByAuthor(int id)
+        {
+            IEnumerable<BookEM> retVal = null;
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                retVal = db.Query<BookEM>("SELECT B.* FROM [Books] AS B INNER JOIN [BooksAuthors] AS AB ON AB.BookId=B.BookId WHERE AB.AuthorId = @id", new { id }).ToList();
+            }
+            return retVal;
         }
     }
 }

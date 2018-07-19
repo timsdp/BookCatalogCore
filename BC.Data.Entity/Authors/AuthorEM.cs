@@ -17,6 +17,7 @@ namespace BC.Data.Entity.Authors
         public string Country { get; set; }
         public string ExtraInfo { get; set; }
         public string Quote { get; set; }
+        public string WikiUrl { get; set; }
 
         public override string ToString()
         {

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BC.Data.Entity.Authors;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace BC.Infrastructure.Interfaces.Repository
 {
-    public interface IAuthorsRepository
+    public interface IAuthorRepository : IGenericRepository<AuthorEM>
     {
     }
 }

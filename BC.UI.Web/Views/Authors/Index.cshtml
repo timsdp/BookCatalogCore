@@ -44,7 +44,8 @@
     $(document).ready(function () {
         var table = $('#tableAuthors').DataTable({
     proccessing: true,
-    serverSide: true,
+            serverSide: true,
+            stateSave: true,
     ajax: {
         url: "@Url.Action("GetAll", "Authors")",
         type: 'POST'

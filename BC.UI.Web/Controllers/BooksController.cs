@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using BC.Business.Author;
+using BC.Business.Book;
 using BC.Data.Entity.Books;
 using BC.Data.Repositories;
+using BC.Infrastructure.Interfaces.Service;
 using BC.UI.Web.Models.Datatable;
 using BC.ViewModel.Books;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +16,18 @@ namespace BC.UI.Web.Controllers
 {
     public class BooksController : Controller
     {
-        BooksRepository booksRepo = new BooksRepository();
+        IBookService bookService;
+        IAuthorService authorService;
+        public BooksController(/*IBookService bookService, IAuthorService authorService*/)
+        {
+            this.bookService = bookService;
+            this.authorService = authorService;
+
+            string connString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
+            this.authorService = new AuthorService(connString);
+            this.bookService = new BookService(connString);
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -80,7 +94,7 @@ namespace BC.UI.Web.Controllers
                 sortDir = true;
             }
 
-            var entries = booksRepo.GetAll(searchBy,take,skip,sortBy,sortDir,out filteredResultsCount,out totalResultsCount);
+            var entries = bookService.GetAllFiltered(searchBy,take,skip,sortBy,sortDir,out filteredResultsCount,out totalResultsCount);
 
             var resultVm = Mapper.Map<List<BookVM>>(entries);
             return resultVm;

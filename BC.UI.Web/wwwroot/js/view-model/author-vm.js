@@ -8,10 +8,13 @@ var Author = Author || {};
     self.UrlSaveVm = '';
     self.UrlGetVm = '';
 
+    self.EditModalId = '';
+    self.DataTableId = '';
+
     //Viewmodel instance
     self.VM = {
         //Observable fields
-        Id: 999,
+        Id: -1,
         FirstName : ko.observable(""),
         LastName : ko.observable(""),
         FullName : ko.pureComputed(function () { return self.VM.FirstName() + " " + self.VM.LastName(); }),
@@ -21,7 +24,7 @@ var Author = Author || {};
         Born : ko.observable(-1),
         Died: ko.observable(-1),
         Rating: ko.observable(0),
-        TopBooks : ["Book name 1", "Book name 2", "Book name 3", "Book name 4"],
+        TopBooks: ko.observableArray([{name:'default book'}]),
         IsFavourite : ko.observable(true),
         Wiki : ko.observable("https://nourl")
     }
@@ -40,7 +43,7 @@ var Author = Author || {};
             self.VM.Born(model.born);
             self.VM.Died(model.died);
             self.VM.Rating(model.rating);
-            self.VM.TopBooks = ["Book name 1", "Book name 2", "Book name 3", "Book name 4"];
+            self.VM.TopBooks = ko.mapping.fromJS(model.topBooks);
             self.VM.IsFavourite(-1);
             self.VM.Wiki(model.wiki);
             //Or we can use automatic mapping http://knockoutjs.com/documentation/plugins-mapping.html
@@ -48,6 +51,10 @@ var Author = Author || {};
     }
 
     self.SaveVMHandler = function () {
+        if ($('#authorEditForm').valid() === false) {
+            toastr.error('Client-side validation did not pass.');
+            return;
+        }
         console.log("Post Author to server...");
         var dto = ko.toJS(self.VM);
         console.log("json: " + dto);
@@ -57,7 +64,17 @@ var Author = Author || {};
             data: dto,
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded'
-        }).success(function () { console.log('Save: success!'); toastr.success('Update Success!'); }).error(function(){ console.log('Save: error!'); toastr.error('Update error'); });
+        }).success(function (data) {
+            if (data!== undefined && data.err>0) {
+                toastr.error('Error! ' + data.msg);
+                return;
+            }
+            console.log('Save: success!');
+            toastr.success('Update Success!');
+            $(self.EditModalId).modal('hide');
+            $(self.DataTableId).DataTable().ajax.reload(null, false);
+        })
+            .error(function () { console.log('Save: error!'); toastr.error('Update error'); });
     }
 //https://learn.javascript.ru/call-apply
 // transfer passed context (AuthorVM) to "this" in function as a parameter

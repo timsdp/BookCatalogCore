@@ -38,24 +38,8 @@
     </div>
 </div>
 @Html.Partial("../Authors/_ModalEdit")
+@Html.Partial("_Edit")
 
-<div class="modal" id="modalBookEdit" tabindex="-1" role="dialog" aria-labelledby="modalAuthorEdit">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Edit book</h4>
-            </div>
-            <div class="modal-body">
-                @Html.Partial("_Edit")
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script>
     $(document).ready(function () {
@@ -66,7 +50,8 @@
         url: "@Url.Action("GetAll", "Books")",
         type: 'POST'
             },
-        rowId: 'id',
+            rowId: 'id',
+            stateSave: true,
         language: {
         "search": "",
         "searchPlaceholder": "Search..."

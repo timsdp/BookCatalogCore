@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BC.Data.Entity\BC.Data.Entity.csproj" />
+    <ProjectReference Include="..\BC.Infrastructure\BC.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

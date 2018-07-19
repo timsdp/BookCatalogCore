@@ -5,21 +5,22 @@
 }
 
 <script src="~/js/view-model/author-VM.js"></script>
-
+ 
     <div class="modal" id="modalAuthorEdit" tabindex="-1" role="dialog" aria-labelledby="modalAuthorEdit">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Edit author123</h4>
-                    
+                    <h4 class="modal-title" id="myModalLabel">Edit author</h4>
+
                 </div>
                 <div class="modal-body">
+
+
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-4 col-md-5">
                                 <div class="card card-user">
-                                    <button data-bind="click: SaveVMHandler" type="button" class="btn btn-primary">Save changes</button>
                                     <div class="image">
                                         <img src="~/images/author-bg.jpg" alt="...">
                                     </div>
@@ -66,7 +67,7 @@
                                                     </div>
                                                     <div class="col-xs-6">
                                                         <!--Example of array binding. Using-->
-                                                        <span data-bind="text: $data">Book name 1</span>
+                                                        <span data-bind="text: $data.name">Book name 1</span>
                                                         <br>
                                                         <span class="text-muted"><small>About something</small></span>
                                                     </div>
@@ -82,80 +83,85 @@
                             </div>
                             <div class="col-lg-8 col-md-7">
                                 <div class="card">
+
                                     <div class="header">
                                         <h4 class="title">Edit Info</h4>
                                     </div>
                                     <div class="content">
+                                        <form id="authorEditForm">
+                                            
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>First Name</label>
+                                                        <input type="text" class="form-control border-input" placeholder="First Name" data-bind="value:VM.FirstName" id="firstName" name="firstName">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>Last Name</label>
+                                                        <input type="text" class="form-control border-input" placeholder="Last Name" data-bind="value:VM.LastName" id="lastName" name="lastName">
+                                                    </div>
+                                                </div>
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>First Name</label>
-                                                    <input type="text" class="form-control border-input" placeholder="First Name" data-bind="value:VM.FirstName">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Last Name</label>
-                                                    <input type="text" class="form-control border-input" placeholder="Last Name" data-bind="value:VM.LastName">
-                                                </div>
                                             </div>
 
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Country</label>
-                                                    <input class="form-control border-input" placeholder="Country born" data-bind="value:VM.Country">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Country</label>
+                                                        <input class="form-control border-input" placeholder="Country born" data-bind="value:VM.Country" id="country" name="country">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Date of birth</label>
+                                                        <input class="form-control border-input" placeholder="Date of birth" data-bind="value:VM.Born"  id="born" name="born">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Date of death</label>
+                                                        <input class="form-control border-input" placeholder="Date of death" data-bind="value:VM.Died" id="died" name="died">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">Date of birth</label>
-                                                    <input class="form-control border-input" placeholder="Date of birth" data-bind="value:VM.Born">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Wikipedia link</label>
+                                                        <input class="form-control border-input" placeholder="Url" data-bind="value:VM.Wiki">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">Date of death</label>
-                                                    <input class="form-control border-input" placeholder="Date of death" data-bind="value:VM.Died">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Famous quote</label>
+                                                        <textarea rows="5" class="form-control border-input" placeholder="Here can be your description" data-bind="value:VM.Quote"></textarea>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Wikipedia link</label>
-                                                    <input class="form-control border-input" placeholder="Url" data-bind="value:VM.Wiki">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Famous quote</label>
-                                                    <textarea rows="5" class="form-control border-input" placeholder="Here can be your description" data-bind="value:VM.Quote"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-
+                                            <div class="clearfix"></div>
+                                        </form>
                                     </div>
+
                                 </div>
                             </div>
 
 
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button data-bind="click: SaveVMHandler" type="button" class="btn btn-primary">Save and close</button>
+                    <button data-bind="click: SaveVMHandler" type="submit" class="btn btn-primary">Save and close</button>
                 </div>
             </div>
         </div>
     </div>
+
 <script>
 
     $(document).ready(function () {
@@ -165,7 +171,40 @@
 
         Author.UrlSaveVm = '@Url.Action("Update","Authors")';
         Author.UrlGetVm = '@Url.Action("Get","Authors")';
+        Author.EditModalId = '#modalAuthorEdit';
+        Author.DataTableId = '#tableBooks';
         //$('#btnApply').click(function () { Author.SaveVM()});
+
+        $('#authorEditForm').validate({
+            // Specify validation rules
+            rules: {
+                // The key name on the left side is the name attribute
+                // of an input field. Validation rules are defined
+                // on the right side
+                firstName: {
+                    required: true,
+                    minlength: 2,
+                },
+                lastName: {
+                    required: true,
+                    minlength: 2,
+                },
+                country: {
+                    required: true
+                },
+                born: {
+                    required: true,
+                    max:2015
+                }
+            },
+            // Specify validation error messages
+            messages: {
+                firstName: "Please enter firstname",
+                lastName: "Please enter lastname",
+                country: "Please enter country",
+                born: "Please enter valid born year"
+            } 
+        });
 
     });
 </script>

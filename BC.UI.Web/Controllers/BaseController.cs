@@ -8,6 +8,9 @@ namespace BC.UI.Web.Controllers
 {
     public class BaseController : Controller
     {
-        
+        public JsonResult response(int errorCode, string message)
+        {
+            return Json(new { Err = errorCode, Msg = message });
+        }
     }
 }
