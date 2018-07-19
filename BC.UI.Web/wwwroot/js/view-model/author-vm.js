@@ -7,7 +7,9 @@ var Author = Author || {};
     //API urls
     self.UrlSaveVm = '';
     self.UrlGetVm = '';
+    self.UrlRemoveVm = '';
 
+    //Elements' ids
     self.EditModalId = '';
     self.DataTableId = '';
 
@@ -75,6 +77,24 @@ var Author = Author || {};
             $(self.DataTableId).DataTable().ajax.reload(null, false);
         })
             .error(function () { console.log('Save: error!'); toastr.error('Update error'); });
+    }
+
+    self.Remove = function (bookId) {
+        var dto = ko.toJS({ id: bookId });
+        $.ajax({
+            url: self.UrlRemoveVm,
+            data: dto,
+            type: 'POST',
+            contentType: 'application/x-www-form-urlencoded'
+        }).success(function (data) {
+            if (data !== undefined && data.err > 0) {
+                toastr.error('Error! ' + data.msg);
+                return;
+            }
+            toastr.success('Book was removed!');
+            $(self.DataTableId).DataTable().ajax.reload(null, false);
+        })
+            .error(function () { console.log('Removing: error!'); toastr.error('Removing error'); });
     }
 //https://learn.javascript.ru/call-apply
 // transfer passed context (AuthorVM) to "this" in function as a parameter

@@ -156,7 +156,7 @@ namespace BC.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public void Remove(BookEM item)
+        public void Remove(int id)
         {
             throw new NotImplementedException();
         }
