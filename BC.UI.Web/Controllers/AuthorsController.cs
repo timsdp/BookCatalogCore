@@ -48,17 +48,17 @@ namespace BC.UI.Web.Controllers
             //}
             if (!ModelState.IsValid)
             {
-                return response(1, "Server-side validation fails. Status = " + ModelState.ValidationState);
+                return GetBaseResponse(true, "Server-side validation fails. Status = " + ModelState.ValidationState);
             }
             authorService.Update(vm);
-            return response(0,"Success");
+            return GetBaseResponse(false,"Success");
         }
 
         [HttpPost]
         public JsonResult Remove(int id)
         {
             authorService.Remove(id);
-            return response(0, "Success");
+            return GetBaseResponse(false, "Success");
         }
 
 

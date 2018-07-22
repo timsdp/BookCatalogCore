@@ -43,7 +43,7 @@ namespace BC.UI.Web.Controllers
         public JsonResult Remove(int id)
         {
             bookService.Remove(id);
-            return response(0, "Success");
+            return GetBaseResponse(false, "Success");
         }
 
         [HttpPost]

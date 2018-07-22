@@ -54,7 +54,7 @@ var Book = Book || {};
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded'
         }).success(function (data) {
-            if (data !== undefined && data.err > 0) {
+            if (data !== undefined && data.error) {
                 toastr.error('Error! ' + data.msg);
                 return;
             }
@@ -74,7 +74,7 @@ var Book = Book || {};
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded'
         }).success(function (data) {
-            if (data !== undefined && data.err > 0) {
+            if (data !== undefined && data.error) {
                 toastr.error('Error! ' + data.msg);
                 return;
             }
