@@ -1,5 +1,5 @@
 //It will define the variable AuthorVM to an empty object if it is not already defined.
-var Author = Author || {};
+var AuthorModal = AuthorModal || {};
 
 (function() {
     var self = this;
@@ -17,19 +17,19 @@ var Author = Author || {};
     self.VM = {
         //Observable fields
         Id: -1,
-        FirstName : ko.observable(""),
-        LastName : ko.observable(""),
-        FullName : ko.pureComputed(function () { return self.VM.FirstName() + " " + self.VM.LastName(); }),
-        Country : ko.observable(""),
-        Quote : ko.observable(""),
-        BooksCount : -1,
-        Born : ko.observable(-1),
+        FirstName: ko.observable(""),
+        LastName: ko.observable(""),
+        FullName: ko.pureComputed(function () { return self.VM.FirstName() + " " + self.VM.LastName(); }),
+        Country: ko.observable(""),
+        Quote: ko.observable(""),
+        BooksCount: -1,
+        Born: ko.observable(-1),
         Died: ko.observable(-1),
         Rating: ko.observable(0),
-        TopBooks: ko.observableArray([{name:'default book'}]),
-        IsFavourite : ko.observable(true),
-        Wiki : ko.observable("https://nourl")
-    }
+        TopBooks: ko.observableArray([{ name: 'default book' }]),
+        IsFavourite: ko.observable(true),
+        Wiki: ko.observable("https://nourl")
+    };
 
     self.InitVM = function (entryId) {
         console.log("Fetching Author from server...");
@@ -50,7 +50,7 @@ var Author = Author || {};
             self.VM.Wiki(model.wiki);
             //Or we can use automatic mapping http://knockoutjs.com/documentation/plugins-mapping.html
         });
-    }
+    };
 
     self.SaveVMHandler = function () {
         if ($('#authorEditForm').valid() === false) {
@@ -67,8 +67,8 @@ var Author = Author || {};
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded'
         }).success(function (data) {
-            if (data!== undefined && data.error) {
-                toastr.error('Error! ' + data.msg);
+            if (data !== undefined && data.error) {
+                BCApp.ProcessErrorResponse(data);
                 return;
             }
             console.log('Save: success!');
@@ -77,7 +77,7 @@ var Author = Author || {};
             $(self.DataTableId).DataTable().ajax.reload(null, false);
         })
             .error(function () { console.log('Save: error!'); toastr.error('Update error'); });
-    }
+    };
 
     self.Remove = function (authorId) {
         var dto = ko.toJS({ id: authorId });
@@ -95,7 +95,7 @@ var Author = Author || {};
             $(self.DataTableId).DataTable().ajax.reload(null, false);
         })
             .error(function () { console.log('Removing: error!'); toastr.error('Removing error'); });
-    }
+    };
 //https://learn.javascript.ru/call-apply
 // transfer passed context (AuthorVM) to "this" in function as a parameter
-}).apply(Author);
+}).apply(AuthorModal);

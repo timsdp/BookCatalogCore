@@ -4,7 +4,7 @@
     ViewBag.Title = "Authors";
 }
 
-<script src="~/js/view-model/author-popup.js"></script>
+<script src="~/js/view-model/author-modal.js"></script>
 
 <div class="container-fluid">
     <div class="row">
@@ -112,13 +112,13 @@
             ShowPromptAuthorRemove(rowId);
         });
         function ShowModalAuthorEdit(authorId) {
-            Author.InitVM(authorId);
+            AuthorModal.InitVM(authorId);
             $('#modalAuthorEdit').appendTo("body").modal('show');
         }
         function ShowPromptAuthorRemove(authorId) {
             bootbox.confirm('Are you sure want to delete this author?', function (result) {
                 if (result) {
-                    Author.Remove(authorId);
+                    AuthorModal.Remove(authorId);
                 }
             });
         }

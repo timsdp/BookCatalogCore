@@ -1,5 +1,5 @@
 //It will define the variable BookVM to an empty object if it is not already defined.
-var Book = Book || {};
+var BookModal = BookModal || {};
 
 (function () {
     var self = this;
@@ -21,8 +21,8 @@ var Book = Book || {};
         Published: ko.observable(""),
         Pages: ko.observable(""),
         Rating: ko.observable(""),
-        Authors: ko.observableArray([{ id:0, fullName:'Test Author' }])
-    }
+        Authors: ko.observableArray([{ id: 0, fullName: 'Test Author' }])
+    };
 
     self.InitVM = function (entryId) {
         console.log("Fetching Book from server...");
@@ -37,7 +37,7 @@ var Book = Book || {};
             self.VM.Authors = ko.mapping.fromJS(model.authors);
             //Or we can use automatic mapping http://knockoutjs.com/documentation/plugins-mapping.html
         });
-    }
+    };
 
     self.SaveVMHandler = function () {
         if ($('#BookEditForm').valid() === false) {
@@ -55,7 +55,7 @@ var Book = Book || {};
             contentType: 'application/x-www-form-urlencoded'
         }).success(function (data) {
             if (data !== undefined && data.error) {
-                toastr.error('Error! ' + data.msg);
+                toastr.error('Error! ' + data.message);
                 return;
             }
             console.log('Save: success!');
@@ -64,7 +64,7 @@ var Book = Book || {};
             $(self.DataTableId).DataTable().ajax.reload(null, false);
         })
             .error(function () { console.log('Save: error!'); toastr.error('Update error'); });
-    }
+    };
 
     self.Remove = function (bookId) {
         var dto = ko.toJS({ id: bookId });
@@ -85,4 +85,4 @@ var Book = Book || {};
     }
     //https://learn.javascript.ru/call-apply
     // transfer passed context (BookVM) to "this" in function as a parameter
-}).apply(Book);
+}).apply(BookModal);

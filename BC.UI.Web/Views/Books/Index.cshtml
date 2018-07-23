@@ -4,8 +4,8 @@
 }
 
 
-<script src="~/js/view-model/author-popup.js"></script>
-<script src="~/js/view-model/book-popup.js"></script>
+<script src="~/js/view-model/author-modal.js"></script>
+<script src="~/js/view-model/book-modal.js"></script>
 
 
 <div class="container-fluid">
@@ -128,17 +128,17 @@
         initTableButtons();
     });
     function ShowModalAuthorEdit(entryId) {
-        Author.InitVM(entryId);
+        AuthorModal.InitVM(entryId);
         $('#modalAuthorEdit').appendTo("body").modal('show');
     }
     function ShowModalBookEdit(bookId) {
-        Book.InitVM(bookId);
+        BookModal.InitVM(bookId);
         $('#modalBookEdit').appendTo("body").modal('show');
     }
     function ShowPromptBookRemove(bookId) {
         bootbox.confirm('Are you sure want to delete this book?', function (result) {
             if (result) {
-                Book.Remove(bookId);
+                BookModal.Remove(bookId);
             }
         });
     }

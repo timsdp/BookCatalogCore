@@ -103,7 +103,7 @@ pd = {
              $off_canvas_sidebar.find('button').addClass('btn-simple btn-block');
 
              $toggle.click(function (){
-                if(pd.misc.navbar_menu_visible == 1) {
+                if(pd.misc.navbar_menu_visible === 1) {
                     $('html').removeClass('nav-open');
                     pd.misc.navbar_menu_visible = 0;
                     $('#bodyClick').remove();

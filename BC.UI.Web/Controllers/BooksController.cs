@@ -20,8 +20,8 @@ namespace BC.UI.Web.Controllers
         IAuthorService authorService;
         public BooksController(/*IBookService bookService, IAuthorService authorService*/)
         {
-            this.bookService = bookService;
-            this.authorService = authorService;
+            //this.bookService = bookService;
+            //this.authorService = authorService;
 
             string connString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
             this.authorService = new AuthorService(connString);

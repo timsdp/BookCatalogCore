@@ -20,8 +20,8 @@ namespace BC.UI.Web.Controllers
         IAuthorService authorService;
         public AuthorsController(/*IBookService bookService, IAuthorService authorService*/)
         {
-            this.bookService = bookService;
-            this.authorService = authorService;
+            //this.bookService = bookService;
+            //this.authorService = authorService;
 
             string connString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
             this.authorService = new AuthorService(connString);
@@ -46,9 +46,17 @@ namespace BC.UI.Web.Controllers
             //{
             //    return response(1, "Author with provided Last and Firstname is already exists in DB");
             //}
+            List<string> validationMessages = new List<string>();
             if (!ModelState.IsValid)
             {
-                return GetBaseResponse(true, "Server-side validation fails. Status = " + ModelState.ValidationState);
+                foreach (var value in ModelState.Values)
+                {
+                    foreach (var error in value.Errors)
+                    {
+                        validationMessages.Add(error.ErrorMessage);
+                    }
+                }
+                return GetBaseResponse(true, "Server-side validation fails. Status = " + ModelState.ValidationState,null, validationMessages);
             }
             authorService.Update(vm);
             return GetBaseResponse(false,"Success");

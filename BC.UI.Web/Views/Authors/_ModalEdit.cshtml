@@ -165,24 +165,20 @@
 <script>
 
     $(document).ready(function () {
-        ko.applyBindings(Author, $('#modalAuthorEdit')[0]);
+        ko.applyBindings(AuthorModal, $('#modalAuthorEdit')[0]);
         
         //Subscribe example: check changed value
-        Author.VM.Born.subscribe(function (newValue) { if (newValue > 2000) alert("Age seems like invalid! Check is It true?"); });
+        AuthorModal.VM.Born.subscribe(function (newValue) { if (newValue > 2000) alert("Age seems like invalid! Check is It true?"); });
 
-        Author.UrlSaveVm = '@Url.Action("Update","Authors")';
-        Author.UrlGetVm = '@Url.Action("Get","Authors")';
-        Author.UrlRemoveVm = '@Url.Action("Remove","Authors")';
+        AuthorModal.UrlSaveVm = '@Url.Action("Update","Authors")';
+        AuthorModal.UrlGetVm = '@Url.Action("Get","Authors")';
+        AuthorModal.UrlRemoveVm = '@Url.Action("Remove","Authors")';
 
-        Author.EditModalId = '#modalAuthorEdit';
-        Author.DataTableId = '#tableAuthors';
+        AuthorModal.EditModalId = '#modalAuthorEdit';
+        AuthorModal.DataTableId = '#tableAuthors';
 
         $('#authorEditForm').validate({
-            // Specify validation rules
             rules: {
-                // The key name on the left side is the name attribute
-                // of an input field. Validation rules are defined
-                // on the right side
                 firstName: {
                     required: true,
                     minlength: 2,
@@ -199,7 +195,6 @@
                     max:2015
                 }
             },
-            // Specify validation error messages
             messages: {
                 firstName: "Please enter firstname",
                 lastName: "Please enter lastname",

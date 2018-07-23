@@ -105,13 +105,13 @@
 
     $(document).ready(function () {
 
-        Book.UrlSaveVm = '@Url.Action("Update","Books")';
-        Book.UrlGetVm = '@Url.Action("Get","Books")';
-        Book.UrlRemoveVm = '@Url.Action("Remove","Books")';
+        BookModal.UrlSaveVm = '@Url.Action("Update","Books")';
+        BookModal.UrlGetVm = '@Url.Action("Get","Books")';
+        BookModal.UrlRemoveVm = '@Url.Action("Remove","Books")';
 
-        Book.EditModalId = '#modalBookEdit';
-        Book.DataTableId = '#tableBooks';
+        BookModal.EditModalId = '#modalBookEdit';
+        BookModal.DataTableId = '#tableBooks';
 
-        ko.applyBindings(Book, $('#modalBookEdit')[0]);
+        ko.applyBindings(BookModal, $('#modalBookEdit')[0]);
     });
 </script>
