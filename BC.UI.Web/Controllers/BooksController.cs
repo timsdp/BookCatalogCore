@@ -26,6 +26,7 @@ namespace BC.UI.Web.Controllers
             string connString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
             this.authorService = new AuthorService(connString);
             this.bookService = new BookService(connString);
+            HttpContext.RequestServices.GetService()
         }
 
         public IActionResult Index()
