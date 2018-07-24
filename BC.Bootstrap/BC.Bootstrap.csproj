@@ -6,10 +6,13 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Unity.NetCore" Version="4.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BC.Data.Entity\BC.Data.Entity.csproj" />
+    <ProjectReference Include="..\BC.Data\BC.Data.csproj" />
     <ProjectReference Include="..\BC.Infrastructure\BC.Infrastructure.csproj" />
     <ProjectReference Include="..\BC.ViewModel\BC.ViewModel.csproj" />
   </ItemGroup>

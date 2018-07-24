@@ -1,7 +1,10 @@
-﻿using BC.Infrastructure.Interfaces.Base;
+﻿using BC.Bootstrap.Services;
+using BC.Infrastructure.Interfaces;
+using BC.Infrastructure.Interfaces.Base;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.IdentityModel.Protocols;
 using System;
 using System.Collections.Generic;
 using System.Linq;
