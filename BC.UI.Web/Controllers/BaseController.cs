@@ -2,46 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BC.Infrastructure.Interfaces.Base;
+using BC.Bootstrap.Context;
+using BC.Infrastructure.Context;
 using BC.UI.Web.Filters;
 using BC.UI.Web.Models;
-using BC.UI.Web.Models.Context;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Protocols;
 
 namespace BC.UI.Web.Controllers
 {
     [CustomExceptionFilter]
     public class BaseController : Controller
     {
-        private IServiceProviderFactory currentFactory;
-        private IRequestContext currentContext;
-
-        public IServiceProviderFactory CurrentFactory
+        #region Constructors
+        public BaseController()
         {
-            get
-            {
-                if (this.currentFactory == null)
-                {
-                    this.currentFactory = this.RequestContext.Factory;
-                }
-                return this.currentFactory;
-            }
+            CurrentContext = new WebContext(@"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True");
         }
+        #endregion
 
-        public IRequestContext RequestContext
-        {
-            get
-            {
-
-                if (this.currentContext == null)
-                {
-                    this.currentContext = new DefaultContext(base.HttpContext);
-                }
-                return this.currentContext;
-            }
-
-        }
-
+        protected IWebContext CurrentContext { get; }
 
 
         public JsonResult GetBaseResponse(bool error, string message, object data = null, List<string> messages = null)

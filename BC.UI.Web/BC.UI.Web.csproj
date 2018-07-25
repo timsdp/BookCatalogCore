@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Context\" />
     <Folder Include="wwwroot\lib\bootstrap-plugins\js\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>

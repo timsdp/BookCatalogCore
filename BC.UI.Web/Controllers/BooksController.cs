@@ -16,19 +16,6 @@ namespace BC.UI.Web.Controllers
 {
     public class BooksController : BaseController
     {
-        IBookService bookService;
-        IAuthorService authorService;
-        public BooksController(/*IBookService bookService, IAuthorService authorService*/)
-        {
-            //this.bookService = bookService;
-            //this.authorService = authorService;
-
-            string connString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
-            this.authorService = new AuthorService(connString);
-            this.bookService = new BookService(connString);
-            
-        }
-
         public IActionResult Index()
         {
             return View();
@@ -36,14 +23,20 @@ namespace BC.UI.Web.Controllers
 
         public JsonResult Get(int id)
         {
-            BookVM viewModel = bookService.GetById(id);
-            return new JsonResult(viewModel);
+            using (var service = this.CurrentContext.Factory.GetService<IBookService>(CurrentContext.RootContext))
+            {
+                BookVM viewModel = service.GetById(id);
+                return new JsonResult(viewModel);
+            }
         }
 
         [HttpPost]
         public JsonResult Remove(int id)
         {
-            bookService.Remove(id);
+            using (var service = this.CurrentContext.Factory.GetService<IBookService>(CurrentContext.RootContext))
+            {
+                service.Remove(id);
+            }
             return GetBaseResponse(false, "Success");
         }
 
@@ -96,9 +89,11 @@ namespace BC.UI.Web.Controllers
                 sortBy = "Id";
                 sortDir = true;
             }
-
-            var entries = bookService.GetAllFiltered(searchBy,take,skip,sortBy,sortDir,out filteredResultsCount,out totalResultsCount);
-
+            IEnumerable<BookVM> entries = null;
+            using (var service = this.CurrentContext.Factory.GetService<IBookService>(CurrentContext.RootContext))
+            {
+                entries = service.GetAllFiltered(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
+            }
             var resultVm = Mapper.Map<List<BookVM>>(entries);
             return resultVm;
         }

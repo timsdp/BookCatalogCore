@@ -16,17 +16,6 @@ namespace BC.UI.Web.Controllers
 {
     public class AuthorsController : BaseController
     {
-        IBookService bookService;
-        IAuthorService authorService;
-        public AuthorsController(/*IBookService bookService, IAuthorService authorService*/)
-        {
-            //this.bookService = bookService;
-            //this.authorService = authorService;
-
-            string connString = @"Data Source=LOCALHOST\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
-            this.authorService = new AuthorService(connString);
-            this.bookService = new BookService(connString);
-        }
         public IActionResult Index()
         {
             return View();
@@ -34,19 +23,23 @@ namespace BC.UI.Web.Controllers
 
         public JsonResult Get(int id)
         {
-            AuthorVM viewModel = authorService.GetById(id);
-            return new JsonResult(viewModel);
+            using (var service = this.CurrentContext.Factory.GetService<IAuthorService>(CurrentContext.RootContext))
+            {
+                AuthorVM viewModel = service.GetById(id);
+                return new JsonResult(viewModel);
+            }
         }
 
 
         [HttpPost]
         public IActionResult Update(AuthorVM vm)
         {
-            //if (authorService.CheckExist(vm))
-            //{
-            //    return response(1, "Author with provided Last and Firstname is already exists in DB");
-            //}
-            List<string> validationMessages = new List<string>();
+
+                //if (authorService.CheckExist(vm))
+                //{
+                //    return response(1, "Author with provided Last and Firstname is already exists in DB");
+                //}
+                List<string> validationMessages = new List<string>();
             if (!ModelState.IsValid)
             {
                 foreach (var value in ModelState.Values)
@@ -58,14 +51,21 @@ namespace BC.UI.Web.Controllers
                 }
                 return GetBaseResponse(true, "Server-side validation fails. Status = " + ModelState.ValidationState,null, validationMessages);
             }
-            authorService.Update(vm);
+            using (var service = this.CurrentContext.Factory.GetService<IAuthorService>(CurrentContext.RootContext))
+            {
+                service.Update(vm);
+            }
+           
             return GetBaseResponse(false,"Success");
         }
 
         [HttpPost]
         public JsonResult Remove(int id)
         {
-            authorService.Remove(id);
+            using(var service = this.CurrentContext.Factory.GetService<IAuthorService>(CurrentContext.RootContext))
+            {
+                service.Remove(id);
+            }
             return GetBaseResponse(false, "Success");
         }
 
@@ -114,16 +114,20 @@ namespace BC.UI.Web.Controllers
 
         private List<AuthorVM> getData(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
+
             if (String.IsNullOrEmpty(searchBy))
             {
                 sortBy = "Id";
                 sortDir = true;
             }
 
-            var entries = authorService.GetAllFiltered(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
-
-            var resultVm = Mapper.Map<List<AuthorVM>>(entries);
-            return resultVm;
+            IEnumerable<AuthorVM> entries = null;
+            using (var service = this.CurrentContext.Factory.GetService<IAuthorService>(CurrentContext.RootContext))
+            {
+                entries = service.GetAllFiltered(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
+            }
+            
+            return Mapper.Map<List<AuthorVM>>(entries); 
         }
         #endregion
 

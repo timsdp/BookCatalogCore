@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using BC.Data.Entity.Authors;
+﻿using BC.Data.Entity.Authors;
 using BC.Data.Entity.Books;
 using BC.Data.Repositories;
+using BC.Infrastructure.Context;
 using BC.Infrastructure.Interfaces.Repository;
 using BC.Infrastructure.Interfaces.Service;
 using BC.ViewModel;
@@ -12,15 +12,9 @@ using System.Text;
 
 namespace BC.Business.Book
 {
-    public class BookService : IBookService
+    public class BookService :BaseService, IBookService
     {
-        IAuthorRepository authorRepository = null;
-        IBookRepository bookRepository = null;
-        public BookService(string connectionString)
-        {
-            this.authorRepository = new AuthorsRepository(connectionString);
-            this.bookRepository = new BookRepository(connectionString);
-        }
+        public BookService(IRootContext context) : base(context) { }
 
         public void Add(BookVM entity)
         {
@@ -34,8 +28,12 @@ namespace BC.Business.Book
 
         public IEnumerable<BookVM> GetAllFiltered(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
-            IEnumerable<BookEM> entities = bookRepository.GetAllFiltered(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
-            return Mapper.Map<IEnumerable<BookVM>>(entities);
+            using (var bookRepository = Context.Factory.GetService<IBookRepository>(Context.RootContext))
+            {
+                IEnumerable<BookEM> entities = bookRepository.GetAllFiltered(searchBy, take, skip, sortBy, sortDir, out filteredResultsCount, out totalResultsCount);
+                return Context.Mapper.MapTo<IEnumerable<BookVM>, IEnumerable<BookEM>>(entities);
+            }
+            
         }
 
         public IEnumerable<BookVM> GetByAuthor(int authorId)
@@ -45,17 +43,24 @@ namespace BC.Business.Book
 
         public BookVM GetById(int id)
         {
-            BookEM entity = bookRepository.Get(id);
-            IEnumerable<AuthorEM> authorsEm = authorRepository.GetByBook(id);
-            List<AuthorVM> authorsVm = Mapper.Map<List<AuthorVM>>(authorsEm);
-            BookVM retVal = Mapper.Map<BookVM>(entity);
-            retVal.Authors = authorsVm;
-            return retVal;
+            using (var bookRepository = Context.Factory.GetService<IBookRepository>(Context.RootContext))
+            using (var authorRepository = Context.Factory.GetService<IAuthorRepository>(Context.RootContext))
+            {
+                BookEM entity = bookRepository.Get(id);
+                IEnumerable<AuthorEM> authorsEm = authorRepository.GetByBook(id);
+                IEnumerable<AuthorVM> authorsVm = Context.Mapper.MapTo<IEnumerable<AuthorVM>, IEnumerable<AuthorEM>>(authorsEm);
+                BookVM retVal = Context.Mapper.MapTo<BookVM, BookEM>(entity);
+                retVal.Authors = new List<AuthorVM>(authorsVm);
+                return retVal;
+            }
         }
 
         public void Remove(int bookId)
         {
-            bookRepository.Remove(bookId);
+            using (var bookRepository = Context.Factory.GetService<IBookRepository>(Context.RootContext))
+            {
+                bookRepository.Remove(bookId);
+            }
         }
 
         public void Update(BookVM entity)

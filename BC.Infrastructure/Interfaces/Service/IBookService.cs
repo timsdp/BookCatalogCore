@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BC.Infrastructure.Interfaces.Service
 {
-    public interface IBookService
+    public interface IBookService:IDisposable
     {
         IEnumerable<BookVM> GetAll();
         IEnumerable<BookVM> GetAllFiltered(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount);

@@ -1,4 +1,5 @@
 ﻿using BC.Data.Entity.Authors;
+using BC.Infrastructure.Context;
 using BC.Infrastructure.Interfaces.Repository;
 using Dapper;
 using System;
@@ -10,14 +11,11 @@ using System.Text;
 
 namespace BC.Data.Repositories
 {
-    public class AuthorsRepository : IAuthorRepository
+    public class AuthorRepository : BaseRepository<int,AuthorEM>,IAuthorRepository
     {
-        string connectionString = string.Empty;
+        string connectionString => Context.ConnectionString;
 
-        public AuthorsRepository(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
+        public AuthorRepository(IRootContext context) : base(context) { }
 
 
         public List<AuthorEM> GetAll()
@@ -160,6 +158,11 @@ namespace BC.Data.Repositories
                 authors = db.Query<AuthorEM>("SELECT * FROM Authors AS A INNER JOIN BooksAuthors AS AB ON AB.AuthorId = A.AuthorId WHERE AB.BookId=@bookIdParam", new { bookIdParam=bookId}).ToList();
             }
             return authors;
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

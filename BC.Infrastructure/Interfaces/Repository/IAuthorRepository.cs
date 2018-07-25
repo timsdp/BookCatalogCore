@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BC.Infrastructure.Interfaces.Repository
 {
-    public interface IAuthorRepository : IGenericRepository<AuthorEM>
+    public interface IAuthorRepository : IRepositoryBase<int,AuthorEM>
     {
         IEnumerable<AuthorEM> GetAllFiltered(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount);
         IEnumerable<AuthorEM> GetByBook(int bookId);

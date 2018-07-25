@@ -1,5 +1,6 @@
 ﻿using BC.Data.Entity.Authors;
 using BC.Data.Entity.Books;
+using BC.Infrastructure.Context;
 using BC.Infrastructure.Interfaces.Repository;
 using BC.ViewModel.Books;
 using Dapper;
@@ -13,14 +14,9 @@ using System.Text;
 
 namespace BC.Data.Repositories
 {
-    public class BookRepository : IBookRepository
+    public class BookRepository : BaseRepository<int,BookEM>, IBookRepository
     {
-        string connectionString = string.Empty;
-
-        public BookRepository(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
+        public BookRepository(IRootContext context) : base(context) { }
 
         // Used sources:
         // http://dapper-tutorial.net/result-multi-mapping
@@ -72,7 +68,7 @@ namespace BC.Data.Repositories
 ";
 
             var bookDictionary = new Dictionary<int, BookEM>();
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
                 
                 retVal = db.Query<BookEM,AuthorEM,BookEM>(
@@ -114,7 +110,7 @@ namespace BC.Data.Repositories
         public BookEM Get(int id)
         {
             BookEM BookEM = null;
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
                 BookEM = db.Query<BookEM>("SELECT * FROM [Books] WHERE BookId = @id", new { id }).FirstOrDefault();
             }
@@ -123,7 +119,7 @@ namespace BC.Data.Repositories
 
         public void Create(BookEM BookEM)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
                 var sqlQuery = "INSERT INTO [Books] (Name, DatePublished, PagesCount, Rating) VALUES(@Name, @DatePublished,@PagesCount, @Rating); SELECT CAST(SCOPE_IDENTITY() as int)";
                 int? id = db.Query<int>(sqlQuery, BookEM).FirstOrDefault();
@@ -133,7 +129,7 @@ namespace BC.Data.Repositories
 
         public void Update(BookEM BookEM)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
                 var sqlQuery = "UPDATE [Books] SET Name = @Name, DatePublished = @DatePublished,PagesCount = @PagesCount, Rating = @Rating WHERE BookId = @Id";
                 db.Execute(sqlQuery, BookEM);
@@ -142,7 +138,7 @@ namespace BC.Data.Repositories
 
         public void Delete(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
                 var sqlQuery = "DELETE FROM [Books] WHERE BookId = @id";
                 db.Execute(sqlQuery, new { id });
@@ -162,7 +158,7 @@ namespace BC.Data.Repositories
 
         public void Remove(int id)
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
                 var sqlQuery = @"
                     DELETE FROM BooksAuthors WHERE BookId = @id
@@ -174,11 +170,16 @@ namespace BC.Data.Repositories
         public IEnumerable<BookEM> GetByAuthor(int id)
         {
             IEnumerable<BookEM> retVal = null;
-            using (IDbConnection db = new SqlConnection(connectionString))
+            using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
                 retVal = db.Query<BookEM>("SELECT B.* FROM [Books] AS B INNER JOIN [BooksAuthors] AS AB ON AB.BookId=B.BookId WHERE AB.AuthorId = @id", new { id }).ToList();
             }
             return retVal;
+        }
+
+        public void Dispose()
+        {
+           
         }
     }
 }

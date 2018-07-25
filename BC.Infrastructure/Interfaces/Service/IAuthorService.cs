@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BC.Infrastructure.Interfaces.Service
 {
-    public interface IAuthorService
+    public interface IAuthorService :IDisposable
     {
         AuthorVM GetById(int id);
         IEnumerable<AuthorVM> GetAll();
