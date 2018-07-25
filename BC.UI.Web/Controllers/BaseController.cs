@@ -13,37 +13,6 @@ namespace BC.UI.Web.Controllers
     [CustomExceptionFilter]
     public class BaseController : Controller
     {
-        private IServiceProviderFactory currentFactory;
-        private IRequestContext currentContext;
-
-        public IServiceProviderFactory CurrentFactory
-        {
-            get
-            {
-                if (this.currentFactory == null)
-                {
-                    this.currentFactory = this.RequestContext.Factory;
-                }
-                return this.currentFactory;
-            }
-        }
-
-        public IRequestContext RequestContext
-        {
-            get
-            {
-
-                if (this.currentContext == null)
-                {
-                    this.currentContext = new DefaultContext(base.HttpContext);
-                }
-                return this.currentContext;
-            }
-
-        }
-
-
-
         public JsonResult GetBaseResponse(bool error, string message, object data = null, List<string> messages = null)
         {
             string[] messagesArray = messages != null ? messages.ToArray() : null;
