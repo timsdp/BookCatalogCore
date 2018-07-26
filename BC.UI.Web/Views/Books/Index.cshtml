@@ -17,6 +17,9 @@
                     <p class="category">Available books</p>
                 </div>
                 <div class="content">
+                    <button id="btnAddNewBook" class="btn btn-success"><i class="fa fa-plus"></i> Add new</button>
+                    <br />
+                    <br />
                     <div class="table-responsive">
                         <table id="tableBooks" class="table table-striped" style="width:100%">
                             <thead>
@@ -157,4 +160,8 @@
             ShowPromptBookRemove(rowId);
         });
     }
+
+    $('#btnAddNewBook').click(function () {
+        ShowModalBookEdit(null);
+    });
 </script>

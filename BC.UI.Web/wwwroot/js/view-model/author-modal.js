@@ -6,6 +6,7 @@ var AuthorModal = AuthorModal || {};
 
     //API urls
     self.UrlSaveVm = '';
+    self.UrlCreateVm = '';
     self.UrlGetVm = '';
     self.UrlRemoveVm = '';
 
@@ -31,7 +32,27 @@ var AuthorModal = AuthorModal || {};
         Wiki: ko.observable("https://nourl")
     };
 
+    self.ResetControls = function () {
+        //Init each property by new value
+        self.VM.Id = 0;
+        self.VM.FirstName("");
+        self.VM.LastName("");
+        self.VM.Country("");
+        self.VM.Quote("");
+        self.VM.BooksCount = 0;
+        self.VM.Born("");
+        self.VM.Died("");
+        self.VM.Rating("");
+        self.VM.TopBooks = ko.observableArray([]);
+        self.VM.IsFavourite("");
+        self.VM.Wiki("");
+    }
+
     self.InitVM = function (entryId) {
+        if (entryId == null) {
+            self.ResetControls();
+            return;
+        }
         console.log("Fetching Author from server...");
         $.getJSON(self.UrlGetVm + '/?id=' + entryId, function (data) {
             var model = data;
@@ -57,12 +78,12 @@ var AuthorModal = AuthorModal || {};
             toastr.error('Client-side validation did not pass.');
             return;
         }
+
+        var requestUrl = (self.VM.Id > 0) ? self.UrlSaveVm : self.UrlCreateVm;
         console.log("Post Author to server...");
         var dto = ko.toJS(self.VM);
-        console.log("json: " + dto);
-        console.log(self.UrlSaveVm);
         $.ajax({
-            url: self.UrlSaveVm,
+            url: requestUrl,
             data: dto,
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded'

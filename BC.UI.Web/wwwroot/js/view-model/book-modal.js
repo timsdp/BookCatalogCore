@@ -6,6 +6,7 @@ var BookModal = BookModal || {};
 
     //API urls
     self.UrlSaveVm = '';
+    self.UrlCreateVm = '';
     self.UrlGetVm = '';
     self.UrlRemoveVm = '';
 
@@ -24,7 +25,20 @@ var BookModal = BookModal || {};
         Authors: ko.observableArray([{ id: 0, fullName: 'Test Author' }])
     };
 
+    self.ResetControls = function () {
+        self.VM.Id = 0;
+        self.VM.Name("");
+        self.VM.Published("");
+        self.VM.Pages("");
+        self.VM.Rating("");
+        self.VM.Authors = ko.observableArray([]);
+    }
+
     self.InitVM = function (entryId) {
+        if (entryId==null) {
+            self.ResetControls();
+            return;
+        }
         console.log("Fetching Book from server...");
         $.getJSON(self.UrlGetVm + '/?id=' + entryId, function (data) {
             var model = data;
@@ -40,22 +54,21 @@ var BookModal = BookModal || {};
     };
 
     self.SaveVMHandler = function () {
-        if ($('#BookEditForm').valid() === false) {
+        if ($('#bookEditForm').valid() === false) {
             toastr.error('Client-side validation did not pass.');
             return;
         }
+        var requestUrl = (self.VM.Id > 0) ? self.UrlSaveVm : self.UrlCreateVm;
         console.log("Post Book to server...");
         var dto = ko.toJS(self.VM);
-        console.log("json: " + dto);
-        console.log(self.UrlSaveVm);
         $.ajax({
-            url: self.UrlSaveVm,
+            url: requestUrl,
             data: dto,
             type: 'POST',
             contentType: 'application/x-www-form-urlencoded'
         }).success(function (data) {
             if (data !== undefined && data.error) {
-                toastr.error('Error! ' + data.message);
+                BCApp.ProcessErrorResponse(data);
                 return;
             }
             console.log('Save: success!');

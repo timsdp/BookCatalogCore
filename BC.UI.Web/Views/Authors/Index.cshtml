@@ -7,40 +7,45 @@
 <script src="~/js/view-model/author-modal.js"></script>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="header">
-                    <h4 class="title">Authors</h4>
-                    <p class="category">Available authors</p>
-                </div>
-                <div class="content">
-                    <div class="table-responsive">
-                        <table id="tableAuthors" class="table table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>FullName</th>
-                                    <th>Born</th>
-                                    <th>Died</th>
-                                    <th>Rating</th>
-                                    <th>Country</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h4 class="title">Authors</h4>
+                        <p class="category">Available authors</p>
+                    </div>
+                    <div class="content">
+                        <button id="btnAddNewAuthor" class="btn btn-success"><i class="fa fa-plus"></i> Add new</button>
+                        <br />
+                        <br />
+
+                        <div class="table-responsive">
+                            <table id="tableAuthors" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>FullName</th>
+                                        <th>Born</th>
+                                        <th>Died</th>
+                                        <th>Rating</th>
+                                        <th>Country</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
-
     </div>
-</div>
 
-@Html.Partial("_ModalEdit");
+    @Html.Partial("_ModalEdit");
 
-<script>
+    <script>
     $(document).ready(function () {
         var table = $('#tableAuthors').DataTable({
     proccessing: true,
@@ -111,17 +116,24 @@
             var rowId = $(this).parent().parent().attr('id');
             ShowPromptAuthorRemove(rowId);
         });
-        function ShowModalAuthorEdit(authorId) {
-            AuthorModal.InitVM(authorId);
-            $('#modalAuthorEdit').appendTo("body").modal('show');
-        }
-        function ShowPromptAuthorRemove(authorId) {
-            bootbox.confirm('Are you sure want to delete this author?', function (result) {
-                if (result) {
-                    AuthorModal.Remove(authorId);
-                }
-            });
-        }
+
+        
     }
 
-</script>
+    $('#btnAddNewAuthor').click(function () {
+        ShowModalAuthorEdit(null);
+    });
+
+    function ShowModalAuthorEdit(authorId) {
+        AuthorModal.InitVM(authorId);
+        $('#modalAuthorEdit').appendTo("body").modal('show');
+        }
+
+    function ShowPromptAuthorRemove(authorId) {
+        bootbox.confirm('Are you sure want to delete this author?', function (result) {
+            if (result) {
+                AuthorModal.Remove(authorId);
+            }
+        });
+    }
+    </script>

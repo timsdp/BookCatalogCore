@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BC.UI.Web.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace BC.UI.Web.Filters
         public override void OnException(ExceptionContext context)
         {
             var exception = context.Exception;
-            context.Result = new JsonResult(new { exception = true, message=exception.Message });
+            context.Result = new JsonResult(new ExceptionResponse(exception.Message, true, "Server side exception has been occured!"));
         }
     }
 }

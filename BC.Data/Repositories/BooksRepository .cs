@@ -117,21 +117,28 @@ namespace BC.Data.Repositories
             return BookEM;
         }
 
-        public void Create(BookEM BookEM)
+        public override void Create(BookEM BookEM)
         {
             using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
-                var sqlQuery = "INSERT INTO [Books] (Name, DatePublished, PagesCount, Rating) VALUES(@Name, @DatePublished,@PagesCount, @Rating); SELECT CAST(SCOPE_IDENTITY() as int)";
+                var sqlQuery = @"INSERT INTO [Books] (Name, DatePublished, PagesCount, Rating) 
+                                 VALUES(@Name, @DatePublished,@PagesCount, @Rating); 
+                                 SELECT CAST(SCOPE_IDENTITY() as int)";
                 int? id = db.Query<int>(sqlQuery, BookEM).FirstOrDefault();
                 BookEM.BookId = id.Value;
             }
         }
 
-        public void Update(BookEM BookEM)
+        public override void Update(BookEM BookEM)
         {
             using (IDbConnection db = new SqlConnection(Context.ConnectionString))
             {
-                var sqlQuery = "UPDATE [Books] SET Name = @Name, DatePublished = @DatePublished,PagesCount = @PagesCount, Rating = @Rating WHERE BookId = @Id";
+                var sqlQuery = @"UPDATE [Books] 
+                                SET Name = @Name
+                                , DatePublished = @DatePublished
+                                ,PagesCount = @PagesCount
+                                , Rating = @Rating 
+                                WHERE BookId = @Id";
                 db.Execute(sqlQuery, BookEM);
             }
         }

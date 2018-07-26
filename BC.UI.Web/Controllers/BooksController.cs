@@ -31,6 +31,66 @@ namespace BC.UI.Web.Controllers
         }
 
         [HttpPost]
+        public IActionResult Update(BookVM vm)
+        {
+            //Disable validation on Authors field
+            foreach (var value in ModelState.Keys)
+            {
+                if (value.StartsWith("Authors")) ModelState.Remove(value);
+            }
+            
+
+            List<string> validationMessages = new List<string>();
+            if (!ModelState.IsValid)
+            {
+                foreach (var value in ModelState.Values)
+                {
+                    foreach (var error in value.Errors)
+                    {
+                        validationMessages.Add(error.ErrorMessage);
+                    }
+                }
+                return GetBaseResponse(true, "Server-side validation fails. Status = " + ModelState.ValidationState, null, validationMessages);
+            }
+            using (var service = this.CurrentContext.Factory.GetService<IBookService>(CurrentContext.RootContext))
+            {
+                service.Update(vm);
+            }
+
+            return GetBaseResponse(false, "Success");
+        }
+
+        [HttpPost]
+        public IActionResult Create(BookVM vm)
+        {
+            //Disable validation on Authors field
+            foreach (var value in ModelState.Keys)
+            {
+                if (value.StartsWith("Authors")) ModelState.Remove(value);
+            }
+
+
+            List<string> validationMessages = new List<string>();
+            if (!ModelState.IsValid)
+            {
+                foreach (var value in ModelState.Values)
+                {
+                    foreach (var error in value.Errors)
+                    {
+                        validationMessages.Add(error.ErrorMessage);
+                    }
+                }
+                return GetBaseResponse(true, "Server-side validation fails. Status = " + ModelState.ValidationState, null, validationMessages);
+            }
+            using (var service = this.CurrentContext.Factory.GetService<IBookService>(CurrentContext.RootContext))
+            {
+                service.Create(vm);
+            }
+
+            return GetBaseResponse(false, "Success");
+        }
+
+        [HttpPost]
         public JsonResult Remove(int id)
         {
             using (var service = this.CurrentContext.Factory.GetService<IBookService>(CurrentContext.RootContext))
@@ -84,7 +144,7 @@ namespace BC.UI.Web.Controllers
 
         private List<BookVM> getData(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount)
         {
-            if (String.IsNullOrEmpty(searchBy))
+            if (!String.IsNullOrEmpty(searchBy))
             {
                 sortBy = "Id";
                 sortDir = true;
@@ -97,6 +157,8 @@ namespace BC.UI.Web.Controllers
             var resultVm = Mapper.Map<List<BookVM>>(entries);
             return resultVm;
         }
+        #endregion
+        #region Validation helpers
         #endregion
     }
 }

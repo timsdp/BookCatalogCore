@@ -148,8 +148,6 @@
 
                             </div>
                         </div>
-
-
                     </div>
                 </div>
 
@@ -171,6 +169,7 @@
         AuthorModal.VM.Born.subscribe(function (newValue) { if (newValue > 2000) alert("Age seems like invalid! Check is It true?"); });
 
         AuthorModal.UrlSaveVm = '@Url.Action("Update","Authors")';
+        AuthorModal.UrlCreateVm = '@Url.Action("Create","Authors")';
         AuthorModal.UrlGetVm = '@Url.Action("Get","Authors")';
         AuthorModal.UrlRemoveVm = '@Url.Action("Remove","Authors")';
 

@@ -16,9 +16,13 @@ namespace BC.Business.Book
     {
         public BookService(IRootContext context) : base(context) { }
 
-        public void Add(BookVM entity)
+        public void Create(BookVM entity)
         {
-            throw new NotImplementedException();
+            using (var bookRepository = Context.Factory.GetService<IBookRepository>(Context.RootContext))
+            {
+                BookEM model = this.Context.Mapper.MapTo<BookEM, BookVM>(entity);
+                bookRepository.Create(model);
+            }
         }
 
         public IEnumerable<BookVM> GetAll()
@@ -65,7 +69,11 @@ namespace BC.Business.Book
 
         public void Update(BookVM entity)
         {
-            throw new NotImplementedException();
+            using (var bookRepository = Context.Factory.GetService<IBookRepository>(Context.RootContext))
+            {
+                BookEM model = this.Context.Mapper.MapTo<BookEM, BookVM>(entity);
+                bookRepository.Update(model);
+            }
         }
     }
 }

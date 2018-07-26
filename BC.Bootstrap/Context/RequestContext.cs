@@ -6,13 +6,13 @@ using System.Text;
 
 namespace BC.Bootstrap.Context
 {
-    public class WebContext : IWebContext
+    public class RequestContext : IRequestContext
     {
         public IRootContext RootContext { get; set; }
 
         public IServiceProviderFactory Factory => RootContext.Factory;
 
-        public WebContext(string connectionString)
+        public RequestContext(string connectionString)
         {
             RootContext = new RootContext(connectionString);
         }

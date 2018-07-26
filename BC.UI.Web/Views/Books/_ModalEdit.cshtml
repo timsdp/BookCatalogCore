@@ -51,12 +51,12 @@
                                     <h4 class="title">Edit Info</h4>
                                 </div>
                                 <div class="content">
-                                    <form>
+                                    <form id="bookEditForm">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Name</label>
-                                                    <input type="text" class="form-control border-input" placeholder="Full book name" data-bind="value:VM.Name">
+                                                    <input type="text" class="form-control border-input" placeholder="Full book name" data-bind="value:VM.Name" id="name" name="name">
                                                 </div>
                                             </div>
                                         </div>
@@ -65,7 +65,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Date published</label>
-                                                    <input class="form-control border-input" placeholder="Date published" data-bind="value:VM.Published">
+                                                    <input class="form-control border-input" placeholder="Date published" data-bind="value:VM.Published" id="published" name="published">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -95,7 +95,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" data-bind="click: SaveVMHandler" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -106,12 +106,27 @@
     $(document).ready(function () {
 
         BookModal.UrlSaveVm = '@Url.Action("Update","Books")';
+        BookModal.UrlCreateVm = '@Url.Action("Create","Books")';
         BookModal.UrlGetVm = '@Url.Action("Get","Books")';
         BookModal.UrlRemoveVm = '@Url.Action("Remove","Books")';
 
         BookModal.EditModalId = '#modalBookEdit';
         BookModal.DataTableId = '#tableBooks';
 
+        $('#bookEditForm').validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 10,
+                }
+            },
+            messages: {
+                name: "Please enter book title"
+            }
+        });
+
         ko.applyBindings(BookModal, $('#modalBookEdit')[0]);
+
+        $('#published').datetimepicker();
     });
 </script>

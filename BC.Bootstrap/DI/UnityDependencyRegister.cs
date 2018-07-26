@@ -28,7 +28,7 @@ namespace BC.Bootstrap
 
         private static void RegisterContexts()
         {
-            _container.RegisterType<IWebContext, WebContext>();
+            _container.RegisterType<IRequestContext, RequestContext>();
             _container.RegisterType<IBusinessContext, BusinessContext>();
         }
 

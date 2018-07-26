@@ -12,6 +12,7 @@ namespace BC.ViewModel.Books
         public DateTime Published { get; set; }
         public int Pages { get; set; }
         public int Rating { get; set; }
+
         public List<AuthorVM> Authors { get; set; }
     }
 }
