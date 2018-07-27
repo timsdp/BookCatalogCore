@@ -1184,7 +1184,7 @@ textarea.form-control {
   .navbar .btn-simple {
     font-size: 16px; }
 
-.navbar-nav > li > .dropdown-menu {
+.navbar-nav > li > .paper-dropdown-menu {
   border-radius: 6px;
   margin-top: -5px; }
 
@@ -1370,7 +1370,7 @@ textarea.form-control {
   .footer .heart {
     color: #EB5E28; }
 
-.dropdown-menu {
+.paper-dropdown-menu {
   background-color: #FFFCF5;
   border: 0 none;
   border-radius: 6px;
@@ -1384,18 +1384,18 @@ textarea.form-control {
   filter: alpha(opacity=0);
   -webkit-box-shadow: 0 2px rgba(17, 16, 15, 0.1), 0 2px 10px rgba(17, 16, 15, 0.1);
   box-shadow: 0 2px rgba(17, 16, 15, 0.1), 0 2px 10px rgba(17, 16, 15, 0.1); }
-  .open .dropdown-menu {
+  .open .paper-dropdown-menu {
     opacity: 1;
     filter: alpha(opacity=100);
     visibility: visible; }
-  .dropdown-menu .divider {
+  .paper-dropdown-menu .divider {
     background-color: #F1EAE0;
     margin: 0px; }
-  .dropdown-menu .dropdown-header {
+  .paper-dropdown-menu .dropdown-header {
     color: #9A9A9A;
     font-size: 12px;
     padding: 10px 15px; }
-  .select .dropdown-menu {
+  .select .paper-dropdown-menu {
     border-radius: 0 0 10px 10px;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -1415,9 +1415,9 @@ textarea.form-control {
     -ms-transition: all 150ms linear;
     transition: all 150ms linear;
     margin-top: -20px; }
-  .select.open .dropdown-menu {
+  .select.open .paper-dropdown-menu {
     margin-top: -1px; }
-  .dropdown-menu > li > a {
+  .paper-dropdown-menu > li > a {
     color: #66615b;
     font-size: 14px;
     padding: 10px 15px;
@@ -1426,36 +1426,36 @@ textarea.form-control {
     -o-transition: none;
     -ms-transition: none;
     transition: none; }
-    .dropdown-menu > li > a img {
+    .paper-dropdown-menu > li > a img {
       margin-top: -3px; }
-  .dropdown-menu > li > a:focus {
+  .paper-dropdown-menu > li > a:focus {
     outline: 0 !important; }
-  .btn-group.select .dropdown-menu {
+  .btn-group.select .paper-dropdown-menu {
     min-width: 100%; }
-  .dropdown-menu > li:first-child > a {
+  .paper-dropdown-menu > li:first-child > a {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px; }
-  .dropdown-menu > li:last-child > a {
+  .paper-dropdown-menu > li:last-child > a {
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px; }
-  .select .dropdown-menu > li:first-child > a {
+  .select .paper-dropdown-menu > li:first-child > a {
     border-radius: 0;
     border-bottom: 0 none; }
-  .dropdown-menu > li > a:hover,
-  .dropdown-menu > li > a:focus {
+  .paper-dropdown-menu > li > a:hover,
+  .paper-dropdown-menu > li > a:focus {
     background-color: #66615B;
     color: rgba(255, 255, 255, 0.7);
     opacity: 1;
     text-decoration: none; }
-  .dropdown-menu.dropdown-primary > li > a:hover, .dropdown-menu.dropdown-primary > li > a:focus {
+  .paper-dropdown-menu.dropdown-primary > li > a:hover, .paper-dropdown-menu.dropdown-primary > li > a:focus {
     background-color: #7A9E9F; }
-  .dropdown-menu.dropdown-info > li > a:hover, .dropdown-menu.dropdown-info > li > a:focus {
+  .paper-dropdown-menu.dropdown-info > li > a:hover, .paper-dropdown-menu.dropdown-info > li > a:focus {
     background-color: #68B3C8; }
-  .dropdown-menu.dropdown-success > li > a:hover, .dropdown-menu.dropdown-success > li > a:focus {
+  .paper-dropdown-menu.dropdown-success > li > a:hover, .paper-dropdown-menu.dropdown-success > li > a:focus {
     background-color: #7AC29A; }
-  .dropdown-menu.dropdown-warning > li > a:hover, .dropdown-menu.dropdown-warning > li > a:focus {
+  .paper-dropdown-menu.dropdown-warning > li > a:hover, .paper-dropdown-menu.dropdown-warning > li > a:focus {
     background-color: #F3BB45; }
-  .dropdown-menu.dropdown-danger > li > a:hover, .dropdown-menu.dropdown-danger > li > a:focus {
+  .paper-dropdown-menu.dropdown-danger > li > a:hover, .paper-dropdown-menu.dropdown-danger > li > a:focus {
     background-color: #EB5E28; }
 
 .btn-group.select {
@@ -2237,15 +2237,15 @@ textarea.form-control {
   .navbar-search-form {
     display: none; }
 
-  .navbar-nav > li > .dropdown-menu,
-  .dropdown .dropdown-menu {
+  .navbar-nav > li > .paper-dropdown-menu,
+  .dropdown .paper-dropdown-menu {
     transform: translate3d(0px, -40px, 0px);
     transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) 0s, opacity 0.3s ease 0s, height 0s linear 0.35s; }
 
-  .navbar-nav > li.open > .dropdown-menu, .dropdown.open .dropdown-menu {
+  .navbar-nav > li.open > .paper-dropdown-menu, .dropdown.open .paper-dropdown-menu {
     transform: translate3d(0px, 0px, 0px); }
 
-  .navbar-nav > li > .dropdown-menu:before {
+  .navbar-nav > li > .paper-dropdown-menu:before {
     border-bottom: 11px solid #F1EAE0;
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
@@ -2255,7 +2255,7 @@ textarea.form-control {
     right: 12px;
     top: -11px; }
 
-  .navbar-nav > li > .dropdown-menu:after {
+  .navbar-nav > li > .paper-dropdown-menu:after {
     border-bottom: 11px solid #FFFCF5;
     border-left: 11px solid transparent;
     border-right: 11px solid transparent;
@@ -2265,11 +2265,11 @@ textarea.form-control {
     right: 12px;
     top: -10px; }
 
-  .navbar-nav.navbar-left > li > .dropdown-menu:before {
+  .navbar-nav.navbar-left > li > .paper-dropdown-menu:before {
     right: auto;
     left: 12px; }
 
-  .navbar-nav.navbar-left > li > .dropdown-menu:after {
+  .navbar-nav.navbar-left > li > .paper-dropdown-menu:after {
     right: auto;
     left: 12px; }
 
@@ -2670,15 +2670,15 @@ textarea.form-control {
       opacity: 0; }
     100% {
       opacity: 1; } }
-  .dropdown-menu .divider {
+  .paper-dropdown-menu .divider {
     background-color: rgba(229, 229, 229, 0.15); }
 
   .navbar-nav {
     margin: 1px 0; }
 
-  .dropdown-menu {
+  .paper-dropdown-menu {
     display: none; }
-    .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    .paper-dropdown-menu > li > a:hover, .paper-dropdown-menu > li > a:focus {
       background-color: transparent; }
 
   .navbar-fixed-top {
@@ -2726,7 +2726,7 @@ textarea.form-control {
   .navbar-header {
     float: none; }
 
-  .navbar-nav .open .dropdown-menu {
+  .navbar-nav .open .paper-dropdown-menu {
     position: static;
     float: none;
     width: auto;

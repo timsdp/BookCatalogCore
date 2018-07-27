@@ -20,7 +20,7 @@ namespace BC.Bootstrap.MapperProfiles
                 .ForMember(vm => vm.Rating, em => em.MapFrom(s => s.Rating));
             ;
 
-            mapperConfig.CreateMap<BookVM, BookEM>();
+            mapperConfig.CreateMap<BookVM, BookEM>().ForMember(em => em.DatePublished, vm => vm.MapFrom(s => s.Published));
         }
     }
 }
