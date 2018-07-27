@@ -138,7 +138,7 @@ namespace BC.Data.Repositories
                                 , DatePublished = @DatePublished
                                 ,PagesCount = @PagesCount
                                 , Rating = @Rating 
-                                WHERE BookId = @Id";
+                                WHERE BookId = @BookId";
                 db.Execute(sqlQuery, BookEM);
             }
         }

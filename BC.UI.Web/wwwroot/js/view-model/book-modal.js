@@ -45,7 +45,7 @@ var BookModal = BookModal || {};
             //Init each property by new value
             self.VM.Id = model.id;
             self.VM.Name(model.name);
-            self.VM.Published(model.published);
+            self.VM.Published(moment(model.published).format('YYYY'));
             self.VM.Pages(model.pages);
             self.VM.Rating(model.rating);
             self.VM.Authors = ko.mapping.fromJS(model.authors);
