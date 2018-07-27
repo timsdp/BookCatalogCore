@@ -8,6 +8,7 @@ using BC.Business.Book;
 using BC.Data.Entity.Authors;
 using BC.Data.Repositories;
 using BC.Infrastructure.Interfaces.Service;
+using BC.UI.Web.Models.Autocomplete;
 using BC.UI.Web.Models.Datatable;
 using BC.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,19 @@ namespace BC.UI.Web.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetAutocomplete([FromQuery]AutocompleteRequest request)
+        {
+            if (string.IsNullOrEmpty(request.q)) return new JsonResult("");
+
+            using (var service = this.CurrentContext.Factory.GetService<IAuthorService>(CurrentContext.RootContext))
+            {
+                Dictionary<int,string> entries = service.GetAutocomplete(request.q);
+                var data = entries.Select(e => new { id = e.Key, text = e.Value}).ToArray();
+                return new JsonResult(data);
+            }
         }
 
         public JsonResult Get(int id)

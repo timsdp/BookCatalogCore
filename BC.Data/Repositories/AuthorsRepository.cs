@@ -164,5 +164,19 @@ namespace BC.Data.Repositories
         {
             
         }
+
+        public Dictionary<int, string> GetAutocomplete(string query)
+        {
+            Dictionary<int, string> retVal = new Dictionary<int, string>();
+            string sql = @"SELECT AuthorId, FirstName + ' ' + LastName AS [FullName] FROM Authors WHERE (FirstName + LastName)  LIKE '%'+@queryParam+'%'";
+            using (IDbConnection db = new SqlConnection(connectionString))
+            {
+                retVal = db.Query(sql,new { queryParam=query}).ToDictionary(
+                    row => (int)row.AuthorId,
+                    row => (string)row.FullName
+                    );
+            }
+            return retVal;
+        }
     }
 }

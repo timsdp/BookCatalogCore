@@ -92,5 +92,13 @@ namespace BC.Business.Author
                 throw new NotImplementedException();
             }
         }
+
+        public Dictionary<int, string> GetAutocomplete(string query)
+        {
+            using (var authorRepository = Context.Factory.GetService<IAuthorRepository>(Context.RootContext))
+            {
+                return authorRepository.GetAutocomplete(query);
+            }
+        }
     }
 }

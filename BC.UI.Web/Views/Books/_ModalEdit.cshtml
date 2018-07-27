@@ -80,6 +80,19 @@
                                                     <input class="form-control border-input" placeholder="Rating" data-bind="value:VM.Rating">
                                                 </div>
                                             </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Authors</label>
+
+                                                        <select id="selectAuthors" class="form-control border-input" name="states[]" multiple="multiple">
+                                                            <option value="AL">Alabama</option>
+                                                            <option value="WY">Wyoming</option>
+                                                        </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                         </div>
@@ -128,5 +141,21 @@
         ko.applyBindings(BookModal, $('#modalBookEdit')[0]);
 
         $('#published').datetimepicker();
+
+        $('#selectAuthors').select2({
+            placeholder: 'Select authors',
+            width: '100%',
+            ajax: {
+                url: '@Url.Action("GetAutocomplete","Authors")',
+                dataType: 'json',
+                delay: 250,
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            }
+        });
     });
 </script>

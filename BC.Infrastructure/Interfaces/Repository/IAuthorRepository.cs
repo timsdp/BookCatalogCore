@@ -9,5 +9,6 @@ namespace BC.Infrastructure.Interfaces.Repository
     {
         IEnumerable<AuthorEM> GetAllFiltered(string searchBy, int take, int skip, string sortBy, bool sortDir, out int filteredResultsCount, out int totalResultsCount);
         IEnumerable<AuthorEM> GetByBook(int bookId);
+        Dictionary<int, string> GetAutocomplete(string query);
     }
 }

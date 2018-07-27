@@ -15,5 +15,6 @@ namespace BC.Infrastructure.Interfaces.Service
         void Remove(int authorId);
         void Update(AuthorVM entity);
         bool CheckExist(AuthorVM vm);
+        Dictionary<int, string> GetAutocomplete(string query);
     }
 }
