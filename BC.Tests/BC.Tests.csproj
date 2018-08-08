@@ -12,9 +12,4 @@
     <PackageReference Include="MSTest.TestFramework" Version="1.2.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\BC.Business\BC.Business.csproj" />
-    <ProjectReference Include="..\BC.UI.Web\BC.UI.Web.csproj" />
-  </ItemGroup>
-
 </Project>

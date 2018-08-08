@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BC.Bootstrap.Context;
 using BC.Infrastructure.Context;
 using BC.Infrastructure.DI;
@@ -19,7 +20,8 @@ namespace BC.UI.Web.Controllers
         public BaseController()
         {
             //TODO: Get conn string from appsettings.json
-            CurrentContext = new RequestContext("Data Source=LOCALHOST\\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True");
+            string connectionString = "Data Source=LOCALHOST\\SQLEXPRESS;Initial Catalog=BookCatalog;Persist Security Info=True;User ID=sa;Password=Pa$$w0rd;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True";
+            CurrentContext = new RequestContext(connectionString);
         }
         #endregion
 

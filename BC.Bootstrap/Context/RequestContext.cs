@@ -1,4 +1,5 @@
-﻿using BC.Infrastructure.Context;
+﻿using AutoMapper;
+using BC.Infrastructure.Context;
 using BC.Infrastructure.DI;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,9 @@ namespace BC.Bootstrap.Context
 
         public RequestContext(string connectionString)
         {
-            RootContext = new RootContext(connectionString);
+            var mapperConfig = new DefaultMapperConfig().Configure();
+            var mapper1 = mapperConfig.CreateMapper();
+            RootContext = new RootContext(connectionString,mapper1);
         }
     }
 }

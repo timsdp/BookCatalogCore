@@ -1,4 +1,5 @@
-﻿using BC.Infrastructure.Context;
+﻿using AutoMapper;
+using BC.Infrastructure.Context;
 using BC.Infrastructure.DI;
 using BC.Infrastructure.Mapper;
 using System;
@@ -18,11 +19,11 @@ namespace BC.Bootstrap.Context
         public IServiceProviderFactory Factory => factory;
         public IMapperService Mapper => mapper;
 
-        public RootContext(string connectionString)
+        public RootContext(string connectionString,IMapper mapper)
         {
             this.connectionString = connectionString;
             this.factory = UnitySetup.CreateServiceProviderFactory();
-            this.mapper = new MapperService();
+            this.mapper = new MapperService(mapper);
         }
     }
 }

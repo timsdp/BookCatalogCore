@@ -11,11 +11,6 @@ namespace BC.Bootstrap
         private IMapper _mapperInstance;
 
         #region Constructors
-        public MapperService()
-        {
-            _mapperInstance = Mapper.Instance;
-        }
-
         public MapperService(IMapper instance)
         {
             _mapperInstance = instance;

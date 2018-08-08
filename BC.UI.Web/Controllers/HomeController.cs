@@ -12,6 +12,7 @@ namespace BC.UI.Web.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.Message = "Hello world!";
             return View();
         }
 
