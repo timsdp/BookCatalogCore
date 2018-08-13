@@ -8,7 +8,7 @@ using System.Text;
 namespace BC.Test.Controllers
 {
     [TestClass]
-    public class HomeControllerClass
+    public class HomeControllerTest
     {
         [TestMethod]
         public void HomeIndexTests()
@@ -23,5 +23,6 @@ namespace BC.Test.Controllers
             //Assert
             Assert.AreEqual("Hello world!", vewResult.ViewData["Message"]);
         }
+
     }
 }

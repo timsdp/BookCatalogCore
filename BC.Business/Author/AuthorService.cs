@@ -14,9 +14,7 @@ namespace BC.Business.Author
 {
     public class AuthorService : BaseService, IAuthorService
     {
-
         public AuthorService(IRootContext context) : base(context) { }
-
 
         public AuthorVM GetById(int id)
         {

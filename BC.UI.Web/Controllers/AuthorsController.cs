@@ -25,7 +25,7 @@ namespace BC.UI.Web.Controllers
         [HttpGet]
         public JsonResult GetAutocomplete([FromQuery]AutocompleteRequest request)
         {
-            if (string.IsNullOrEmpty(request.q)) return new JsonResult("");
+            if (request == null || string.IsNullOrEmpty(request.q)) return new JsonResult(string.Empty);
 
             using (var service = this.CurrentContext.Factory.GetService<IAuthorService>(CurrentContext.RootContext))
             {
