@@ -25,7 +25,7 @@ namespace BC.UI.Web.Controllers
         }
         #endregion
 
-        protected IRequestContext CurrentContext { get; }
+        public virtual IRequestContext CurrentContext { get;}
 
 
 

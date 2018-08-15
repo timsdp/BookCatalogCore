@@ -1,7 +1,17 @@
-﻿using BC.UI.Web.Controllers;
+﻿using AutoMapper;
+using BC.Bootstrap;
+using BC.Bootstrap.Context;
+using BC.Business.Author;
+using BC.Data.Entity.Authors;
+using BC.Infrastructure.Context;
+using BC.Infrastructure.DI;
+using BC.Infrastructure.Interfaces.Repository;
+using BC.Infrastructure.Interfaces.Service;
+using BC.UI.Web.Controllers;
 using BC.UI.Web.Models.Autocomplete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,9 +21,58 @@ namespace BC.Test.Controllers
     [TestClass]
     public class AuthorsControllerTest
     {
+        private IAuthorService authorService;
+
+        //[TestInitialize]
+        public void Init()
+        {
+            //Repo mock
+            var authorRepoMock = new Mock<IAuthorRepository>();
+            authorRepoMock.Setup(repo => repo.Get(It.IsAny<int>())).Returns(() => null);
+            authorRepoMock.Setup(repo => repo.GetAutocomplete(It.IsAny<string>())).Returns(() => new Dictionary<int, string>());
+
+            //factory mock
+            var factoryMock = new Mock<IServiceProviderFactory>();
+            factoryMock.Setup(f => f.GetService<IAuthorRepository>(It.IsAny<IRootContext>())).Returns(authorRepoMock.Object);
+
+
+            //Context
+            //MapperConfiguration mapperConfig = new DefaultMapperConfig().Configure();
+            //IMapper mapper = mapperConfig.CreateMapper();
+
+
+            //Root context mock
+            var rootContextMock = new Mock<IRootContext>();
+            rootContextMock.Setup(f => f.Factory).Returns(factoryMock.Object);
+
+
+            var requestContextMock = new Mock<IRequestContext>();
+            requestContextMock.Setup(f => f.RootContext).Returns(rootContextMock.Object);
+            requestContextMock.Setup(f => f.Factory).Returns(factoryMock.Object);
+
+
+            var authorControllerMock = new Mock<AuthorsController>();
+            authorControllerMock.Setup(f => f.CurrentContext).Returns(requestContextMock.Object);
+
+
+
+
+            var ac = authorControllerMock.Object.GetAutocomplete(new AutocompleteRequest() { q="name"});
+
+        }
+
+
+
         [TestMethod]
         public void IndexTests()
         {
+            this.Init();
+
+            //Mocking
+            var mock = new Mock<IAuthorRepository>();
+            mock.Setup(repo => repo.Get()).Returns(new List<AuthorEM>() { new AuthorEM() });
+
+
             AuthorsController controller = new AuthorsController();
 
             IActionResult result = controller.Index();
@@ -25,14 +84,18 @@ namespace BC.Test.Controllers
         [TestMethod]
         public void GetAutocompleteTests()
         {
+            this.Init();
+            //Arrange
             AuthorsController controller = new AuthorsController();
 
+            //Act
             IActionResult resultNull = controller.GetAutocomplete(null);
             IActionResult resultDefault = controller.GetAutocomplete(new AutocompleteRequest());
             IActionResult resultEmptyFields = controller.GetAutocomplete(new AutocompleteRequest() { q=string.Empty,term=string.Empty,_type=string.Empty});
             IActionResult resultSingleWord = controller.GetAutocomplete(new AutocompleteRequest() { q = "word", term = string.Empty, _type = string.Empty });
             IActionResult resultMultipleWords = controller.GetAutocomplete(new AutocompleteRequest() { q = "word search", term = string.Empty, _type = string.Empty });
 
+            //Assert
             Assert.IsNotNull(resultNull);
             Assert.IsInstanceOfType(resultNull, typeof(JsonResult));
             Assert.AreEqual(string.Empty, ((JsonResult)resultNull).Value);
@@ -49,8 +112,6 @@ namespace BC.Test.Controllers
 
             Assert.IsNotNull(resultMultipleWords);
             Assert.IsInstanceOfType(resultMultipleWords, typeof(JsonResult));
-
-
         }
     }
 }

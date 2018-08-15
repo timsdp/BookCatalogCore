@@ -3,8 +3,11 @@ using BC.Bootstrap;
 using BC.Bootstrap.Context;
 using BC.Business.Author;
 using BC.Infrastructure.Context;
+using BC.Infrastructure.DI;
 using BC.Infrastructure.Interfaces.Service;
+using BC.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +19,7 @@ namespace BC.Test.Services
     {
        private IAuthorService authorService;
 
-       [TestInitialize]
+        [TestInitialize]
         public void Init()
         {
             MapperConfiguration mapperConfig = new DefaultMapperConfig().Configure();
@@ -30,8 +33,12 @@ namespace BC.Test.Services
         [TestMethod]
         public void RemoveTest()
         {
-
+            //Act
             authorService.Remove(1);
+            AuthorVM author = authorService.GetById(1);
+
+            //Assert
+            Assert.IsNull(author);
         }
     }
 }
