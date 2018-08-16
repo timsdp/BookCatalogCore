@@ -21,44 +21,42 @@ namespace BC.Test.Controllers
     [TestClass]
     public class AuthorsControllerTest
     {
-        private IAuthorService authorService;
+        AuthorsController authorController;
 
-        //[TestInitialize]
-        public void Init()
+        [TestInitialize]
+        public void TestInit()
         {
             //Repo mock
             var authorRepoMock = new Mock<IAuthorRepository>();
             authorRepoMock.Setup(repo => repo.Get(It.IsAny<int>())).Returns(() => null);
             authorRepoMock.Setup(repo => repo.GetAutocomplete(It.IsAny<string>())).Returns(() => new Dictionary<int, string>());
 
-            //factory mock
+            //Svc mock
+            var authorSvcMock = new Mock<IAuthorService>();
+            authorSvcMock.Setup(f => f.GetAutocomplete(It.IsAny<string>())).Returns(new Dictionary<int, string>());
+
+            //Factory mock
             var factoryMock = new Mock<IServiceProviderFactory>();
             factoryMock.Setup(f => f.GetService<IAuthorRepository>(It.IsAny<IRootContext>())).Returns(authorRepoMock.Object);
-
-
+            factoryMock.Setup(f => f.GetService<IAuthorService>(It.IsAny<IRootContext>())).Returns(authorSvcMock.Object);
+            
             //Context
             //MapperConfiguration mapperConfig = new DefaultMapperConfig().Configure();
             //IMapper mapper = mapperConfig.CreateMapper();
-
-
+            
             //Root context mock
             var rootContextMock = new Mock<IRootContext>();
             rootContextMock.Setup(f => f.Factory).Returns(factoryMock.Object);
 
-
+            //Request context mock
             var requestContextMock = new Mock<IRequestContext>();
             requestContextMock.Setup(f => f.RootContext).Returns(rootContextMock.Object);
             requestContextMock.Setup(f => f.Factory).Returns(factoryMock.Object);
 
-
+            //Author controller mock
             var authorControllerMock = new Mock<AuthorsController>();
             authorControllerMock.Setup(f => f.CurrentContext).Returns(requestContextMock.Object);
-
-
-
-
-            var ac = authorControllerMock.Object.GetAutocomplete(new AutocompleteRequest() { q="name"});
-
+            authorController = authorControllerMock.Object;
         }
 
 
@@ -66,12 +64,9 @@ namespace BC.Test.Controllers
         [TestMethod]
         public void IndexTests()
         {
-            this.Init();
-
             //Mocking
             var mock = new Mock<IAuthorRepository>();
             mock.Setup(repo => repo.Get()).Returns(new List<AuthorEM>() { new AuthorEM() });
-
 
             AuthorsController controller = new AuthorsController();
 
@@ -84,9 +79,8 @@ namespace BC.Test.Controllers
         [TestMethod]
         public void GetAutocompleteTests()
         {
-            this.Init();
             //Arrange
-            AuthorsController controller = new AuthorsController();
+            AuthorsController controller = this.authorController;
 
             //Act
             IActionResult resultNull = controller.GetAutocomplete(null);
