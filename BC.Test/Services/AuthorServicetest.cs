@@ -2,8 +2,12 @@
 using BC.Bootstrap;
 using BC.Bootstrap.Context;
 using BC.Business.Author;
+using BC.Business.FakeData.Repositories;
+using BC.Data.Entity.Authors;
+using BC.Data.Repositories;
 using BC.Infrastructure.Context;
 using BC.Infrastructure.DI;
+using BC.Infrastructure.Interfaces.Repository;
 using BC.Infrastructure.Interfaces.Service;
 using BC.ViewModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,28 +21,59 @@ namespace BC.Test.Services
     [TestClass]
     public class AuthorServiceTest
     {
-       private IAuthorService authorService;
+        IAuthorRepository repository;
+        IAuthorService service;
 
         [TestInitialize]
-        public void Init()
+        public void TestInit()
         {
-            MapperConfiguration mapperConfig = new DefaultMapperConfig().Configure();
-            IMapper mapper = mapperConfig.CreateMapper();
-            string connectionString = "";
-            IRootContext rootContext = new RootContext(connectionString, mapper);
+            repository = new FakeAuthorRepository();
             
-            authorService = new AuthorService(rootContext);
+
+            //Factory mock
+            var factoryMock = new Mock<IServiceProviderFactory>();
+            factoryMock.Setup(f => f.GetService<IAuthorRepository>(It.IsAny<IRootContext>())).Returns(repository);
+
+            //Root context mock
+            var rootContextMock = new Mock<IRootContext>();
+            rootContextMock.Setup(f => f.Factory).Returns(factoryMock.Object);
+
+            service = new AuthorService(rootContextMock.Object);
+            
         }
 
         [TestMethod]
-        public void RemoveTest()
+        public void CheckExistAuthorReallyExists()
         {
+            //Arrange
+            repository.Create(new AuthorEM() { FirstName = "Max", LastName = "Smith", YearBorn = 1900 });
+            repository.Create(new AuthorEM() { FirstName = "Kelly", LastName = "Somers", YearBorn = 1950 });
+
             //Act
-            authorService.Remove(1);
-            AuthorVM author = authorService.GetById(1);
+            bool resultAuthor1FirstLetter = service.CheckExist(new AuthorVM() { FirstName = "Max", LastName = "Smith", Born = 1900 });
+            bool resultAuthor1LowerCase = service.CheckExist(new AuthorVM() { FirstName = "max", LastName = "smith", Born = 1900 });
+            bool resultAuthor1UpperCase = service.CheckExist(new AuthorVM() { FirstName = "MAX", LastName = "SMITH", Born = 1900 });
+            bool resultAuthor1MixedCase = service.CheckExist(new AuthorVM() { FirstName = "MaX", LastName = "SmItH", Born = 1900 });
+
+
 
             //Assert
-            Assert.IsNull(author);
+           Assert.IsTrue(resultAuthor1FirstLetter);
+           Assert.IsTrue(resultAuthor1LowerCase  );
+           Assert.IsTrue(resultAuthor1UpperCase  );
+           Assert.IsTrue(resultAuthor1MixedCase);
+        }
+        [TestMethod]
+        public void CheckExistAuthorDoesntExist()
+        {
+            //Arrange
+
+
+            //Act
+            bool result = service.CheckExist(new AuthorVM() { FirstName = "Unknown", LastName = "Author", Born = 9999 });
+
+            //Assert
+            Assert.IsFalse(result);
         }
     }
 }

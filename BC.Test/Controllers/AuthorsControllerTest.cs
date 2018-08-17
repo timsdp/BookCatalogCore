@@ -53,6 +53,7 @@ namespace BC.Test.Controllers
             requestContextMock.Setup(f => f.RootContext).Returns(rootContextMock.Object);
             requestContextMock.Setup(f => f.Factory).Returns(factoryMock.Object);
 
+
             //Author controller mock
             var authorControllerMock = new Mock<AuthorsController>();
             authorControllerMock.Setup(f => f.CurrentContext).Returns(requestContextMock.Object);

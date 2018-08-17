@@ -87,7 +87,15 @@ namespace BC.Business.Author
         {
             using (var authorRepository = Context.Factory.GetService<IAuthorRepository>(Context.RootContext))
             {
-                throw new NotImplementedException();
+                var authors = authorRepository.GetByFullNameAndYear(vm.FirstName,vm.LastName,vm.Born);
+                if (authors.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

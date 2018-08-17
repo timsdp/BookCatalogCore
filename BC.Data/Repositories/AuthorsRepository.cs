@@ -160,11 +160,6 @@ namespace BC.Data.Repositories
             return authors;
         }
 
-        public void Dispose()
-        {
-            
-        }
-
         public Dictionary<int, string> GetAutocomplete(string query)
         {
             Dictionary<int, string> retVal = new Dictionary<int, string>();
@@ -177,6 +172,11 @@ namespace BC.Data.Repositories
                     );
             }
             return retVal;
+        }
+
+        public ICollection<AuthorEM> GetByFullNameAndYear(string firstName, string lastName, int bornYear)
+        {
+            throw new NotImplementedException();
         }
     }
 }
